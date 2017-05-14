@@ -1,0 +1,82 @@
+.navbar {
+    margin-bottom: 0;
+}
+
+.navbar-brand span {
+    font-weight: lighter;
+}
+
+.panel-heading,
+.panel-footer {
+    background: none;
+    border: none;
+}
+
+.panel-heading img {
+    float: left;
+    margin-right: 5px;
+    width: 40px;
+}
+
+.panel-heading h4 {
+    margin: 0;
+    font-weight: bold;
+}
+
+.panel-heading h4>span {
+    font-size: 70%;
+    font-weight: normal;
+    color: grey;
+}
+
+.panel blockquote {
+    padding-left: 0;
+    margin-bottom: 0;
+    border: none;
+}
+
+.panel-footer {
+    padding-top: 0;
+}
+
+.panel-footer ul {
+    -webkit-padding-start: 0px;
+}
+
+.Post-action {
+    display: inline-block;
+}
+
+.Post-action+.Post-action {
+    margin-left: 14px;
+}
+
+.Post-action:last-child {
+    position: relative;
+}
+
+.action-link,
+.action-link:visited {
+    color: #697882;
+}
+
+.other-btn:active,
+.other-btn:focus,
+.other-btn:hover {
+    color: #1DA1F2;
+    text-decoration: none;
+}
+
+.accept-btn:active,
+.accept-btn:focus,
+.accept-btn:hover {
+    color: #19CF86;
+    text-decoration: none;
+}
+
+.decline-btn:active,
+.decline-btn:focus,
+.decline-btn:hover {
+    color: #E81C4F;
+    text-decoration: none;
+}

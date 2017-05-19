@@ -8,7 +8,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">INSA <span>Potins</span></a>
+                <a class="navbar-brand" href="#">{{ config('app.name', 'INSA <span>Potins</span>') }}</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -30,10 +30,19 @@
                             <li><a href="#">Profile settings</a></li>
                             <li><a href="#">Statistics</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">Logout</a></li>
+                            <li><a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            Logout
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form></li>
                         </ul>
                     </li>
                     <li><button type="button" class="btn btn-danger navbar-btn" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Post</button></li>
+
                     @else
                     <li><a href="{{ url('/register') }}">Register</a></li>
                     <li><a href="{{ url('/login') }}">Login</a></li>

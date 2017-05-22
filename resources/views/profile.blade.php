@@ -1,11 +1,28 @@
-@extends('layouts.app')
-
-@section('title', 'INSA Potins')
-
-@section('sidebar')
-@endsection
+@extends('layouts.appfullscreen')
 
 @section('content')
+<div class="jumbotron">
+        <div class="container">
+            <h1>{{ $pseudo }}'s profile</h1>
+            <p>My name is john</p>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button">Follow</a></p>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#home" aria-controls="home" role="tab" data-toggle="tab">My Posts</a>
+            </li>
+            <li role="presentation"><a href="#accepted" aria-controls="profile" role="tab" data-toggle="tab">Accepted posts</a></li>
+            <li role="presentation"><a href="#declined" aria-controls="messages" role="tab" data-toggle="tab">Declined Posts</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <img src="https://pbs.twimg.com/profile_images/641572075321229312/3f_9iwzr_normal.jpg" alt="">
@@ -44,42 +61,10 @@
                     </div>
                 </div>
 
+            </div>
+            <div role="tabpanel" class="tab-pane" id="accepted">No accepted posts</div>
+            <div role="tabpanel" class="tab-pane" id="declined">No declined posts</div>
+        </div>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <img src="https://pbs.twimg.com/profile_images/641572075321229312/3f_9iwzr_normal.jpg" alt="">
-                        <h4>John Doe <span>@john_doe</span></h4> <span>5:34 23 Apr 2016</span></div>
-                    <div class="panel-body">
-                        <blockquote>
-                            This blog post shows a few different types of content that's supported and styled with Bootstrap. Basic typography, images, and code are all supported.
-                        </blockquote>
-                    </div>
-                    <div class="panel-footer">
-                        <ul aria-label="Post actions">
-                            <li class="Post-action">
-                                <a class="action-link accept-btn" href="#">
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                    <span id="accept-number" aria-hidden="true">42</span>
-                                </a>
-                            </li>
-                            <li class="Post-action">
-                                <a class="action-link decline-btn" href="#">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                    <span id="decline-number" aria-hidden="true">59</span>
-                                </a>
-                            </li>
-                            <li class="Post-action">
-                                <a class="action-link other-btn" href="#">
-                                    <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <nav>
-                    <ul class="pager">
-                        <li><a href="#">Load more ...</a></li>
-                    </ul>
-                </nav>
+    </div>
 @endsection

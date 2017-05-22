@@ -13,6 +13,20 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
+                        <div class="form-group{{ $errors->has('pseudo') ? ' has-error' : '' }}">
+                            <label for="pseudo" class="col-md-4 control-label">Username (User ID)</label>
+
+                            <div class="col-md-6">
+                                <input id="pseudo" type="text" class="form-control" name="pseudo" value="{{ old('pseudo') }}" required autofocus>
+
+                                @if ($errors->has('pseudo'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('pseudo') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('prenom') ? ' has-error' : '' }}">
                             <label for="prenom" class="col-md-4 control-label">First Name</label>
 

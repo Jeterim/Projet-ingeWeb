@@ -1,13 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+@foreach ($posts as $post)
 <div class="panel panel-default">
                     <div class="panel-heading">
                         <img src="https://pbs.twimg.com/profile_images/641572075321229312/3f_9iwzr_normal.jpg" alt="">
-                        <h4><a href="#">John Doe</a> <span>@john_doe</span></h4> <span>5:34 23 Apr 2016</span></div>
+                        <h4><a href="/user/{{ $post->id }}">{{ $post->pseudo }}</a></h4> <span>{{ $post->created_at }}</span></div>
                     <div class="panel-body">
                         <blockquote>
-                            LOGGED-INThis blog post shows a few different types of content that's supported and styled with Bootstrap. Basic typography, images, and code are all supported.
+                            {{ $post->content }}
                         </blockquote>
                     </div>
                     <div class="panel-footer">
@@ -38,4 +39,5 @@
                         </ul>
                     </div>
                 </div>
+    @endforeach
 @endsection

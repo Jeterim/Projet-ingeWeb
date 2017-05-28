@@ -3,9 +3,13 @@
 @section('content')
 <div class="jumbotron">
         <div class="container">
-            <h1>{{ $pseudo }}'s profile</h1>
+            <h1>{{ $user->pseudo }}'s profile</h1>
             <p>My name is john</p>
+            @if(Auth::user() == $user)
+            <p><a class="btn btn-primary btn-lg" href="/editprofile" role="button">Edit my profile</a></p>
+            @else
             <p><a class="btn btn-primary btn-lg" href="#" role="button">Follow</a></p>
+            @endif
         </div>
     </div>
 

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+
+use App\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class HomeController extends Controller
+class UserController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -19,16 +22,12 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Get information about a user
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getUserProfile($id)
     {
-        $posts = DB::table('potins')
-        ->join('users', 'users.id', '=', 'potins.user_id')
-        ->limit(5)
-        ->get();
-        return view('home', ['posts' => $posts]);
+        return view('profile', ['user' => User::findOrFail($id)]);
     }
 }

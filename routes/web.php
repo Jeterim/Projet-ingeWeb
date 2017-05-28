@@ -21,3 +21,8 @@ Route::get('profile', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/user/{user_id}', [
+    'uses' => 'UserController@getUserProfile',
+    'as' => 'profile'
+]);

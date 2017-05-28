@@ -16,7 +16,7 @@ class CreatePotinsTable extends Migration
         Schema::create('potins', function (Blueprint $table) {
 
             $table->increments('id');
-            $table->integer('id_user');
+            $table->integer('user_id');
             $table->text('content');
             $table->timestamps();
         });

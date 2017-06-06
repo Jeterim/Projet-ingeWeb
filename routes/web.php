@@ -14,9 +14,6 @@
 Route::get('/', function () {
     return view('index');
 });
-Route::get('profile', function () {
-    return view('profile', ['pseudo' => 'John Doe']);
-});
 
 Auth::routes();
 
@@ -26,3 +23,7 @@ Route::get('/user/{user_id}', [
     'uses' => 'UserController@getUserProfile',
     'as' => 'profile'
 ]);
+
+Route::get('editprofile', function () {
+    return view('editprofile', ['pseudo' => 'John Doe']);
+});

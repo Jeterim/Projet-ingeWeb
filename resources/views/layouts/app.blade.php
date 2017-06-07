@@ -19,6 +19,9 @@
     @include('subviews.topbar')
 
     <div class="container">
+        @if(Session::has('message'))
+            <p class="alert alert-info">{{ Session::get('message') }}</p>
+        @endif
         <div class="row">
             <div class="col-sm-8 blog-main">
                 @yield('content')

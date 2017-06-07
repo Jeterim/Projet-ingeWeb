@@ -19,11 +19,20 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//User
+
 Route::get('/user/{user_id}', [
     'uses' => 'UserController@getUserProfile',
     'as' => 'profile'
 ]);
 
+
 Route::get('editprofile', function () {
     return view('editprofile', ['pseudo' => 'John Doe']);
 });
+
+//Post
+Route::post('/createpost', [
+    'uses' => 'PostController@createPost',
+    'as' => 'post.create'
+]);

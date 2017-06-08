@@ -33,7 +33,12 @@
                     <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dLabel">
-                    <li><a href="#">Comment</a></li>
+                    @if(Auth::id() == $post->user_id)
+                    <li><a href="/potin/edit/{{ $post->id }}">Edit</a></li>
+                    <li><a href="/potin/delete/{{ $post->id }}">Delete</a></li>
+                    <li role="separator" class="divider"></li>
+                    @endif
+                    <li><a href="/post/{{ $post->id }}#comment">Comment</a></li>
                     <li><a href="#">Share</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="#">Report</a></li>

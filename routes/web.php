@@ -17,10 +17,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/home', [
+    'uses' => 'HomeController@index',
+    'as' => 'home'
+]);
 
 //User
-
 Route::get('/user/{user_id}', [
     'uses' => 'UserController@getUserProfile',
     'as' => 'profile'
@@ -31,8 +35,20 @@ Route::get('editprofile', function () {
     return view('editprofile', ['pseudo' => 'John Doe']);
 });
 
+
 //Post
+Route::get('/buy/{post_id}',[
+    'uses' => 'PostController@buy',
+    'as' => 'post.buy'
+]);
+
+Route::get('/delete/{post_id}',[
+    'uses' => 'PostController@deletePost',
+    'as' => 'post.delete'
+]);
+
 Route::post('/createpost', [
     'uses' => 'PostController@createPost',
     'as' => 'post.create'
 ]);
+

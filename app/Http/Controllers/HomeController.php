@@ -33,6 +33,6 @@ class HomeController extends Controller
         // ->get();
         // echo($posts);
 
-       return view('home', ['posts' => Post::all()]);
+       return view('home', ['posts' => Post::all()->sortByDesc('id')]);
     }
 }

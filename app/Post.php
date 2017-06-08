@@ -9,7 +9,7 @@ class Post extends Model
     protected $table = 'potins';
 
     /**
-     * Get the user that owns the post.
+     * Get the user that owns the Post.
      */
     public function user()
     {
@@ -17,7 +17,7 @@ class Post extends Model
     }
 
     /**
-     * Get the comments for the blog post.
+     * Get the comments for the blog Post.
      */
     public function comments()
     {

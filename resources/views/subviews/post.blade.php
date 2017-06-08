@@ -1,7 +1,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <img src="https://pbs.twimg.com/profile_images/641572075321229312/3f_9iwzr_normal.jpg" alt="">
-        <h4><a href="/user/{{ $post->id }}">{{ $post->pseudo }}</a></h4> <span>{{ $post->created_at }}</span></div>
+        <h4><a href="/user/{{ $post->id }}">{{ $post->pseudo }}</a></h4> <span>{{ $post->updated_at }}</span></div>
     <div class="panel-body">
         <blockquote>
             {{ $post->content }}

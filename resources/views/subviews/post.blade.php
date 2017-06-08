@@ -23,7 +23,6 @@
             </li>
             <li class="Post-action">
                 <a class="action-link decline-btn" href="/buy/{{$post->id}}">
-                <p>{{$post->id}} </p>
                     <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
                     <span id="price-number" aria-hidden="true">Acheter pour 42 €</span>
                 </a>

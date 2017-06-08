@@ -42,8 +42,7 @@ class PostController extends Controller
      */
     public function createPost(Request $request)
     {
-
-         //print_r($request->all());
+               //print_r($request->all());
          //echo $request->input("_token");
 
          $this->validate($request, [
@@ -60,7 +59,48 @@ class PostController extends Controller
         }
 
         return redirect()->route('home')->with('message', $message);
+    }
+
+    /**
+     * get post information (doublon ?)
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function geteditPost($id)
+    {
+        $post = Post::findOrFail($id);
+
+        if(!$post) return redirect()->route('home')->with('message', 'This potin doesn\'t exist');
+        if (Auth::id() != $post->user_id) {
+            return redirect()->route('home')->with('message', 'It is not your potin!');
+        }
+        return view('postedit', ['post' => $post]);
         
+    }
+
+
+    /**
+     * Edit a post
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function editPost(Request $request, $id)
+    {
+        //print_r($request->all());
+        //echo $request->input("_token");
+         $this->validate($request, [
+            'message' => 'required|max:300'
+        ]);
+        $post = Post::findOrFail($id);
+        if(!$post) return redirect()->route('home')->with('message', 'This potin doesn\'t exist');
+        if (Auth::id() != $post->user_id) {
+            return redirect()->route('home')->with('message', 'It is not your potin!');
+        }
+        $post->content = $request->input("message");
+        $post->update();
+        $message = 'Potin updated!';
+
+        return redirect()->route('home')->with('message', $message);
     }
 
     /**
@@ -68,7 +108,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function deletePost($id)
+    public function deleteUserPost($id)
     {
         $post = Post::where('id', $id)->first();
         if(!$post) return redirect()->route('home')->with('message', 'This potin doesn\'t exist');
@@ -80,5 +120,39 @@ class PostController extends Controller
         
     }
 
+    /**
+    * Send the deletion page
+    *
+    * @return \Illuminate\Http\Response
+    **/
+    public function buy($id) 
+    {
+        // $post = DB::table('potins')
+        // ->where('potins.id', '=', $id)
+        // ->limit(1)
+        // ->get();
+        return view('buy', [ 'post' => Post::findOrFail($id)]);
+    }
+
+    public function deletePost(Request $req, $id)
+    {
+        $user = Auth::user();
+        if($user) {
+            // Maybe not necessary
+            $bd_user = User::findOrFail($user->id);
+            // Check if user as enough credit
+            if ($bd_user->credits > 10) {
+                $message = 'OK';
+                $bd_user->credits = $bd_user->credits - 10;
+                Post::destroy($id);
+                $bd_user->save();
+             } else {
+               $message = 'Not enough credit to buy this potin';  // Maybe also redirect to the page for recharging
+            }
+        } else {
+            $message = 'problem';
+        }
+        return redirect()->route('home')->with('message', $message);
+    }
 
 }

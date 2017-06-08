@@ -24,6 +24,18 @@ class PostController extends Controller
     }
 
     /**
+     * get post information
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPostInfo($id)
+    {
+        $comments = Post::find(1)->comments->where('potin_id', $id);
+        return view('postView', ['post' => Post::findOrFail($id), 'comments' => $comments]);
+        
+    }
+
+    /**
      * Create new post
      *
      * @return \Illuminate\Http\Response

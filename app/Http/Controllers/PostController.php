@@ -28,9 +28,26 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createPost(Request $req)
+    public function createPost(Request $request)
     {
-        return redirect()->route('home')->with('message', 'Your post was sent!');
+
+         //print_r($request->all());
+         //echo $request->input("_token");
+
+         $this->validate($request, [
+            'message' => 'required|max:300'
+        ]);
+
+        $post = new Post();
+        $post->content = $request->input("message");
+        
+
+        $message = 'There was an error';
+        if ($request->user()->posts()->save($post)) {
+            $message = 'Post successfully created!';
+        }
+
+        return redirect()->route('home')->with('message', $message);
         
     }
 }

@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'pseudo','nom', 'prenom', 'email', 'password', 'credits',
+        'pseudo','nom', 'prenom', 'email', 'credits',
     ];
 
     /**
@@ -26,6 +26,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public $timestamps = false;
 
     /**
      * Get the posts for the user.

@@ -26,7 +26,9 @@ class HomeController extends Controller
     public function index()
     {
         $posts = DB::table('potins')
-        ->join('users', 'users.id', '=', 'potins.user_id')
+        ->select('potins.*', 'users.pseudo')
+        ->leftJoin('users', 'users.id', '=', 'potins.user_id')
+        ->orderBy('potins.id', 'desc')
         ->limit(5)
         ->get();
         return view('home', ['posts' => $posts]);

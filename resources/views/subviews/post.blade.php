@@ -22,6 +22,12 @@
                 </a>
             </li>
             <li class="Post-action">
+                <a class="action-link decline-btn" href="/buy/{{$post->id}}">
+                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                    <span id="price-number" aria-hidden="true">Acheter pour 42 €</span>
+                </a>
+            </li>
+            <li class="Post-action">
                 <a id="dLabel" data-target="#" class="action-link other-btn" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
                 </a>
@@ -39,4 +45,7 @@
             </li>
         </ul>
     </div>
+    
 </div>
+
+

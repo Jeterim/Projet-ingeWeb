@@ -76,7 +76,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="message-text" class="control-label">Your post:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+                        <textarea class="form-control" id="message-text" name="message"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

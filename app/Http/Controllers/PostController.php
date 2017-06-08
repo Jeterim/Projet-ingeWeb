@@ -62,4 +62,23 @@ class PostController extends Controller
         return redirect()->route('home')->with('message', $message);
         
     }
+
+    /**
+     * Delete a post
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deletePost($id)
+    {
+        $post = Post::where('id', $id)->first();
+        if(!$post) return redirect()->route('home')->with('message', 'This potin doesn\'t exist');
+        if (Auth::id() != $post->user_id) {
+            return redirect()->back()->with('message', 'It is not your potin!');
+        }
+        $post->delete();
+        return redirect()->route('home')->with(['message' => 'Successfully deleted!']);
+        
+    }
+
+
 }

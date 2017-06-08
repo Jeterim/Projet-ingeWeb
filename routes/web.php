@@ -41,3 +41,8 @@ Route::get('/post/{post_id}', [
     'uses' => 'PostController@getPostInfo',
     'as' => 'post.view'
 ]);
+
+Route::get('/post/delete/{post_id}', [
+    'uses' => 'PostController@deletePost',
+    'as' => 'post.delete'
+]);

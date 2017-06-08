@@ -27,8 +27,8 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dLabel">
                     @if(Auth::id() == $post->user_id)
-                    <li><a href="/potin/edit/{{ $post->id }}">Edit</a></li>
-                    <li><a href="/potin/delete/{{ $post->id }}">Delete</a></li>
+                    <li><a href="/post/edit/{{ $post->id }}">Edit</a></li>
+                    <li><a href="/post/delete/{{ $post->id }}">Delete</a></li>
                     <li role="separator" class="divider"></li>
                     @endif
                     <li><a href="/post/{{ $post->id }}#comment">Comment</a></li>

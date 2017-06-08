@@ -16,7 +16,7 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="{{ url('/home') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home <span class="sr-only">(current)</span></a></li>
                     @if (Auth::check())
-                    <li><a href="{{ url('/profile') }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> John Doe</a></li>
+                    <li><a href="/user/{{ Auth::id() }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ Auth::user()->pseudo}}</a></li>
                     @endif
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -26,7 +26,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ url('/profile') }}">Your profile</a></li>
+                            <li><a href="/user/{{ Auth::id() }}">Your profile</a></li>
                             <li><a href="#">Profile settings</a></li>
                             <li><a href="#">Statistics</a></li>
                             <li role="separator" class="divider"></li>

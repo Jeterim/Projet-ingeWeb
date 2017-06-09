@@ -25,6 +25,21 @@ class PostController extends Controller
     }
 
     /**
+     * get post from search quey
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function searchPost($query)
+    {
+        DB::enableQueryLog();
+        //print_r($comments);
+        $posts = Post::where('content', 'like', '%'.$query.'%')->get();
+        //dd(DB::getQueryLog());
+        return view('home', ['posts' => $posts]);
+        
+    }
+
+    /**
      * get post information
      *
      * @return \Illuminate\Http\Response

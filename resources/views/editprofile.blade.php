@@ -28,12 +28,10 @@
               </div>
             </form>
 
-            <p>Profil crée le {{ $user->updated_at }}</p>
-            <p><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> {{ $user->credits }} crédits disponibles</p>
-
 
             @if(Auth::user() == $user)
-            <p><a class="btn btn-primary btn-lg" href="/editprofile" role="button">Save changes</a></p>
+            <p><a class="btn btn-primary btn-lg" href="/editprofile" role="button">Change password</a>
+              <a class="btn btn-primary btn-lg" href="/editprofile" role="button">Save changes</a></p>
             @else
             <p><a class="btn btn-primary btn-lg" href="#" role="button">Follow</a></p>
             @endif

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Post;
+use App\Comment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -30,10 +31,44 @@ class PostController extends Controller
      */
     public function getPostInfo($id)
     {
-        $comments = Post::find(1)->comments->where('potin_id', $id);
+        //DB::enableQueryLog();
+        $comments = Post::find($id)->comments->where('potin_id', $id);
+        //dd(DB::getQueryLog());
+        //print_r($comments);
         return view('postView', ['post' => Post::findOrFail($id), 'comments' => $comments]);
         
     }
+
+    /**
+     * create new comment
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createComment(Request $request, $id)
+    {
+               //print_r($request->all());
+         //echo $request->input("_token");
+
+         $this->validate($request, [
+            'message' => 'required|max:300'
+        ]);
+
+        $comment = new Comment();
+        $comment->user_id = Auth::id();
+        $comment->potin_id = $id;
+        $comment->content = $request->input("message");
+        
+
+        $message = 'There was an error';
+        if ($request->user()->comments()->save($comment)) {
+            $message = 'Comment successfully created!';
+        }
+
+        return redirect()->back()->with('message', $message);
+        
+    }
+
+
 
     /**
      * Create new post

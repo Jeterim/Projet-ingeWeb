@@ -3,6 +3,15 @@
 @section('content')
     @include('subviews.post', ['post' => $post])
 
+
+    <form id="comment" method="POST" action="{{ route('post.comment', $post->id) }}">
+            {{ csrf_field() }}
+            <textarea name="message">
+                
+            </textarea>
+            <button type="submit">Comment</button>
+        </form>
+
     @foreach ($comments as $comment)
     <div class="media">
         <div class="media-left">

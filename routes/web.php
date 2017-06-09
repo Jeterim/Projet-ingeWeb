@@ -24,6 +24,11 @@ Route::get('/home', [
     'as' => 'home'
 ]);
 
+Route::get('/search/{user_query}', [
+    'uses' => 'HomeController@search',
+    'as' => 'search'
+]);
+
 //User
 Route::get('/user/{user_id}', [
     'uses' => 'UserController@getUserProfile',
@@ -55,6 +60,11 @@ Route::post('/createpost', [
 Route::get('/post/{post_id}', [
     'uses' => 'PostController@getPostInfo',
     'as' => 'post.view'
+]);
+
+Route::post('/post/{post_id}/comment', [
+    'uses' => 'PostController@createComment',
+    'as' => 'post.comment'
 ]);
 
 Route::get('/post/delete/{post_id}', [

@@ -12,7 +12,7 @@
             <textarea name="message">
                 {{ $post->content }}
             </textarea>
-            <button type="submit">OkK</button>
+            <button type="submit">Edit</button>
         </form>
     </div>
     <div class="panel-footer">

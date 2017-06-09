@@ -23,12 +23,12 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $posts = DB::table('potins')
-        ->join('users', 'users.id', '=', 'potins.user_id')
-        ->limit(5)
-        ->get();
-        return view('home', ['posts' => $posts]);
-    }
+     public function index()
+     {
+         $posts = DB::table('potins')
+         ->join('users', 'users.id', '=', 'potins.user_id')
+         ->limit(5)
+         ->get();
+         return view('home', ['posts' => $posts]);
+     }
 }

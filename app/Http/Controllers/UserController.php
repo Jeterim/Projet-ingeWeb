@@ -21,6 +21,7 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
+
     /**
      * Get information about a user
      *
@@ -28,6 +29,21 @@ class UserController extends Controller
      */
     public function getUserProfile($id)
     {
-        return view('profile', ['user' => User::findOrFail($id)]);
+        return view('editprofile', ['user' => User::findOrFail($id)]);
+    }
+
+    /**
+     * Get information and all posts about a user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getUserAndPostProfile($id)
+    {
+        $posts = DB::table('potins')
+        ->join('users', 'users.id', '=', 'potins.user_id')
+        ->get();
+
+        return view('profile', ['user' => User::findOrFail($id),
+                                'posts' => $posts]);
     }
 }

@@ -22,14 +22,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 //User
 
 Route::get('/user/{user_id}', [
-    'uses' => 'UserController@getUserProfile',
+    'uses' => 'UserController@getUserAndPostProfile',
     'as' => 'profile'
 ]);
 
 
-Route::get('editprofile', function () {
-    return view('editprofile', ['pseudo' => 'John Doe']);
-});
+Route::get('/editprofile/{user_id}', [
+    'uses' => 'UserController@getUserProfile',
+    'as' => 'profile'
+]);
 
 //Post
 Route::post('/createpost', [

@@ -25,7 +25,7 @@ Route::get('/home', [
 ]);
 
 Route::get('/search/{user_query}', [
-    'uses' => 'HomeController@search',
+    'uses' => 'PostController@searchPost',
     'as' => 'search'
 ]);
 

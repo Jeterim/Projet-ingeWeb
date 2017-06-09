@@ -50,9 +50,9 @@
 
                 </ul>
                 @if (Auth::check())
-                <form class="navbar-form navbar-right">
+                <form class="navbar-form navbar-right" method="get" action="search" role="search-text">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" name="search-text" placeholder="Search">
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>

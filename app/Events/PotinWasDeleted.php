@@ -39,12 +39,14 @@ class PotinWasDeleted implements ShouldBroadcast
      * @return Channel|array
      */
     public function broadcastOn()
-    {
-        // return new PrivateChannel('channel-name');
-        return [
-            "potin-deleted.1"
-        ];
+    { 
+        return new PrivateChannel("potin-deleted.".$this->post->user_id);
+        // return [
+        //     "potin-deleted.1"
+        // ];
     }
+
+
 
     public function broadcastAs()
     {

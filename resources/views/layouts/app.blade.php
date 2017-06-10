@@ -76,6 +76,10 @@
     @if(Auth::check())
         <script>
             var userId = {{Auth::user()->id}};
+
+            $.ajaxSetup({
+                headers: { 'X-CSRF-Token': "{!! csrf_token() !!}" }
+            });
         </script>
     @endif
     <script src="{{ mix('js/app.js') }}"></script>

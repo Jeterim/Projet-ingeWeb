@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Post;
+use App\Comment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -24,16 +25,90 @@ class PostController extends Controller
     }
 
     /**
+     * get post from search quey
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function searchPost(Request $query)
+    {
+        DB::enableQueryLog();
+        //print_r($comments);
+        $this->validate($query, [
+            'user_query' => 'required|min:5'
+        ]);
+
+        $posts = Post::where('content', 'like', '%'.$query.'%')->get();
+        //dd(DB::getQueryLog());
+        return view('home', ['posts' => $posts]);
+        
+    }
+
+    /**
      * get post information
      *
      * @return \Illuminate\Http\Response
      */
     public function getPostInfo($id)
     {
-        $comments = Post::find(1)->comments->where('potin_id', $id);
+        //DB::enableQueryLog();
+        $comments = Post::find($id)->comments->where('potin_id', $id);
+        //dd(DB::getQueryLog());
+        //print_r($comments);
         return view('postView', ['post' => Post::findOrFail($id), 'comments' => $comments]);
         
     }
+
+    /**
+     * create new comment
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createComment(Request $request, $id)
+    {
+               //print_r($request->all());
+         //echo $request->input("_token");
+
+         $this->validate($request, [
+            'message' => 'required|max:300'
+        ]);
+
+        $comment = new Comment();
+        $comment->user_id = Auth::id();
+        $comment->potin_id = $id;
+        $comment->content = $request->input("message");
+        
+
+        $message = 'There was an error';
+        if ($request->user()->comments()->save($comment)) {
+            $message = 'Comment successfully created!';
+        }
+
+        return redirect()->back()->with('message', $message);
+        
+    }
+
+    /**
+     * delete comment
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteComment($id)
+    {
+               //print_r($request->all());
+         //echo $request->input("_token");
+
+        $comment = Comment::where('id', $id)->first();
+        if(!$comment) return redirect()->route('home')->with('message', 'This comment doesn\'t exist');
+        if (Auth::id() != $comment->user_id) {
+            return redirect()->back()->with('message', 'It is not your comment!');
+        }
+        $comment->delete();
+
+        return redirect()->back()->with(['message' => 'Successfully deleted!']);
+        
+    }
+
+
 
     /**
      * Create new post
@@ -59,6 +134,65 @@ class PostController extends Controller
         }
 
         return redirect()->route('home')->with('message', $message);
+    }
+
+    /**
+     * get post information (doublon ?)
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function geteditPost($id)
+    {
+        $post = Post::findOrFail($id);
+
+        if(!$post) return redirect()->route('home')->with('message', 'This potin doesn\'t exist');
+        if (Auth::id() != $post->user_id) {
+            return redirect()->route('home')->with('message', 'It is not your potin!');
+        }
+        return view('postedit', ['post' => $post]);
+        
+    }
+
+
+    /**
+     * Edit a post
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function editPost(Request $request, $id)
+    {
+        //print_r($request->all());
+        //echo $request->input("_token");
+         $this->validate($request, [
+            'message' => 'required|max:300'
+        ]);
+        $post = Post::findOrFail($id);
+        if(!$post) return redirect()->route('home')->with('message', 'This potin doesn\'t exist');
+        if (Auth::id() != $post->user_id) {
+            return redirect()->route('home')->with('message', 'It is not your potin!');
+        }
+        $post->content = $request->input("message");
+        $post->update();
+        $message = 'Potin updated!';
+
+        return redirect()->route('home')->with('message', $message);
+    }
+
+    /**
+     * Delete a post
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteUserPost($id)
+    {
+        $post = Post::where('id', $id)->first();
+        if(!$post) return redirect()->route('home')->with('message', 'This potin doesn\'t exist');
+        if (Auth::id() != $post->user_id) {
+            return redirect()->back()->with('message', 'It is not your potin!');
+        }
+        $post->delete();
+        return redirect()->route('home')->with(['message' => 'Successfully deleted!']);
+        
     }
 
     /**

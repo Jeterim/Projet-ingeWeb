@@ -24,6 +24,13 @@ Route::get('/home', [
     'as' => 'home'
 ]);
 
+
+
+Route::get('/search/{user_query}', [
+    'uses' => 'PostController@searchPost',
+    'as' => 'search'
+]);
+
 //User
 Route::get('/user/{user_id}', [
     'uses' => 'UserController@getUserProfile',
@@ -57,3 +64,27 @@ Route::get('/post/{post_id}', [
     'as' => 'post.view'
 ]);
 
+Route::post('/post/{post_id}/comment', [
+    'uses' => 'PostController@createComment',
+    'as' => 'post.comment'
+]);
+
+Route::get('/comment/delete/{comment_id}/', [
+    'uses' => 'PostController@deleteComment',
+    'as' => 'post.comment.delete'
+]);
+
+Route::get('/post/delete/{post_id}', [
+    'uses' => 'PostController@deleteUserPost',
+    'as' => 'post.udelete'
+]);
+
+Route::post('/post/edit/{post_id}', [
+    'uses' => 'PostController@editPost',
+    'as' => 'post.edit'
+]);
+
+Route::get('/post/edit/{post_id}', [
+    'uses' => 'PostController@geteditPost',
+    'as' => 'post.getedit'
+]);

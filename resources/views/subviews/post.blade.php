@@ -1,7 +1,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <img src="https://pbs.twimg.com/profile_images/641572075321229312/3f_9iwzr_normal.jpg" alt="">
-        <h4><a href="/user/{{ $post->user_id }}">@if(!$post->pseudo) {{$post->user->pseudo}} @else {{ $post->pseudo }} @endif</a></h4> <span>{{ $post->updated_at }}</span></div>
+        <h4><a href="/user/{{ $post->user_id }}">@if(!$post->pseudo) {{$post->user->pseudo}} @else {{ $post->pseudo }} @endif</a></h4> <span>{{ Carbon\Carbon::parse($post->updated_at)->toDayDateTimeString() }}</span></div>
     <div class="panel-body">
         <blockquote>
             {{ $post->content }}
@@ -33,8 +33,8 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dLabel">
                     @if(Auth::id() == $post->user_id)
-                    <li><a href="/potin/edit/{{ $post->id }}">Edit</a></li>
-                    <li><a href="/potin/delete/{{ $post->id }}">Delete</a></li>
+                    <li><a href="/post/edit/{{ $post->id }}">Edit</a></li>
+                    <li><a href="/post/delete/{{ $post->id }}">Delete</a></li>
                     <li role="separator" class="divider"></li>
                     @endif
                     <li><a href="/post/{{ $post->id }}#comment">Comment</a></li>

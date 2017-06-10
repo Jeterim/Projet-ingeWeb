@@ -45,4 +45,9 @@ class PotinWasDeleted implements ShouldBroadcast
             "potin-deleted.1"
         ];
     }
+
+    public function broadcastAs()
+    {
+        return 'potin-deleted';
+    }
 }

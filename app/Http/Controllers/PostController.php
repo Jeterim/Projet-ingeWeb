@@ -29,10 +29,14 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function searchPost($query)
+    public function searchPost(Request $query)
     {
         DB::enableQueryLog();
         //print_r($comments);
+        $this->validate($query, [
+            'user_query' => 'required|min:5'
+        ]);
+
         $posts = Post::where('content', 'like', '%'.$query.'%')->get();
         //dd(DB::getQueryLog());
         return view('home', ['posts' => $posts]);

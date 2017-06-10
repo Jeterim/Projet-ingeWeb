@@ -1,8 +1,10 @@
 @extends('layouts.appfullscreen')
 
 @section('content')
-<div class="jumbotron">
+<!--<div class="jumbotron">
         <div class="container">
+          <div class="row">
+            <div class="col">
             <h1>Profile settings</h1>
             <h2>Informations</h2>
             <form>
@@ -35,6 +37,13 @@
             @else
             <p><a class="btn btn-primary btn-lg" href="#" role="button">Follow</a></p>
             @endif
+          </div>
+          <div class="col">
+            <img src="https://static.rentacar.fr/images/cms_uploaded/pages/hub-vehicule/vp/location-voiture-rentacar-citadine.png" width=900px"/>
+          </div>
+          </div>
         </div>
     </div>
+-->
+</div>
 @endsection

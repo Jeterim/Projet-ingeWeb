@@ -6,8 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    protected $table = 'potins';
+
+    // testing
+    public $fillable = ['user_id', 'content'];
+
     /**
-     * Get the user that owns the post.
+     * Get the user that owns the Post.
      */
     public function user()
     {
@@ -15,10 +20,10 @@ class Post extends Model
     }
 
     /**
-     * Get the comments for the blog post.
+     * Get the comments for the blog Post.
      */
     public function comments()
     {
-        return $this->hasMany('App\Comment');
+        return $this->hasMany('App\Comment', 'potin_id');
     }
 }

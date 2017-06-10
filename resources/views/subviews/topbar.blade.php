@@ -22,7 +22,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::check())
                     <li><a href="#"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span> Notifications <span class="badge">42</span></a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span> Credits <span class="badge">12</span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span> Credits <span class="badge">{{ Auth::user()->credits }}</span></a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings<span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -50,9 +50,9 @@
 
                 </ul>
                 @if (Auth::check())
-                <form class="navbar-form navbar-right">
+                <form class="navbar-form navbar-right" method="get" action="search/">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" name="search-text" pattern=".{3,}" required placeholder="Search">
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
@@ -76,7 +76,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="message-text" class="control-label">Your post:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+                        <textarea class="form-control" id="message-text" name="message"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -84,6 +84,7 @@
                     <button type="submit" class="btn btn-danger">Post it</button>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 @endif

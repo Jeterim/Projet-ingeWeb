@@ -80,3 +80,9 @@
     color: #E81C4F;
     text-decoration: none;
 }
+
+.media-body span {
+    display: block;
+    font-size: 80%;
+    color: grey;
+}

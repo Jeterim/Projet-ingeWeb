@@ -17,10 +17,21 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/home', [
+    'uses' => 'HomeController@index',
+    'as' => 'home'
+]);
+
+
+
+Route::get('/search/{user_query}', [
+    'uses' => 'PostController@searchPost',
+    'as' => 'search'
+]);
 
 //User
-
 Route::get('/user/{user_id}', [
     'uses' => 'UserController@getUserAndPostProfile',
     'as' => 'profile'
@@ -32,8 +43,49 @@ Route::get('/editprofile/{user_id}', [
     'as' => 'profile'
 ]);
 
+
 //Post
+Route::get('/buy/{post_id}',[
+    'uses' => 'PostController@buy',
+    'as' => 'post.buy'
+]);
+
+Route::get('/delete/{post_id}',[
+    'uses' => 'PostController@deletePost',
+    'as' => 'post.delete'
+]);
+
 Route::post('/createpost', [
     'uses' => 'PostController@createPost',
     'as' => 'post.create'
+]);
+
+Route::get('/post/{post_id}', [
+    'uses' => 'PostController@getPostInfo',
+    'as' => 'post.view'
+]);
+
+Route::post('/post/{post_id}/comment', [
+    'uses' => 'PostController@createComment',
+    'as' => 'post.comment'
+]);
+
+Route::get('/comment/delete/{comment_id}/', [
+    'uses' => 'PostController@deleteComment',
+    'as' => 'post.comment.delete'
+]);
+
+Route::get('/post/delete/{post_id}', [
+    'uses' => 'PostController@deleteUserPost',
+    'as' => 'post.udelete'
+]);
+
+Route::post('/post/edit/{post_id}', [
+    'uses' => 'PostController@editPost',
+    'as' => 'post.edit'
+]);
+
+Route::get('/post/edit/{post_id}', [
+    'uses' => 'PostController@geteditPost',
+    'as' => 'post.getedit'
 ]);

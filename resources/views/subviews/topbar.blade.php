@@ -50,9 +50,9 @@
 
                 </ul>
                 @if (Auth::check())
-                <form class="navbar-form navbar-right" method="get" action="search" role="search-text">
+                <form class="navbar-form navbar-right" method="get" action="search/">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="search-text" placeholder="Search">
+                        <input type="text" class="form-control" name="search-text" pattern=".{3,}" required placeholder="Search">
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>

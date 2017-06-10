@@ -6,10 +6,9 @@
 
     <form id="comment" method="POST" action="{{ route('post.comment', $post->id) }}">
             {{ csrf_field() }}
-            <textarea name="message">
-                
-            </textarea>
-            <button type="submit">Comment</button>
+            <label for="msg-text">Comments</label>
+            <textarea class="form-control" id="msg-text" name="message" rows="3"></textarea>
+            <button type="submit" class="btn btn-primary">Comment</button>
         </form>
 
     @foreach ($comments as $comment)
@@ -20,9 +19,9 @@
             </a>
         </div>
         <div class="media-body">
-            <h4 class="media-heading">{{ $comment->user_id }}</h4>
-            <span>{{ $comment->created_at }}</span>
+            <h4 class="media-heading">{{ $comment->user->pseudo }}</h4>
             {{ $comment->content }}
+            <span>{{ Carbon\Carbon::parse($post->created_at)->toDayDateTimeString() }}</span>
         </div>
     </div>
     @endforeach

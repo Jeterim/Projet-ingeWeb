@@ -17,10 +17,6 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 
 Broadcast::channel('potin-deleted.{userId}', function ($user, $userId) {
     // @todo
-    // Si le post correspondant au postId est le meme que celui du user courant => true
-
-    // $post = \App\Post::findOrFail($postId);
-    // return (int) $user->id === (int) $post->user_id;
-
-    return true; 
+    // Si l'id de l'auteur est le meme que celui de l'utilisateur qui demande accés au chanel.
+    return (int) $user->id === (int) $userId;
 });

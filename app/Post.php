@@ -8,6 +8,9 @@ class Post extends Model
 {
     protected $table = 'potins';
 
+    // testing
+    public $fillable = ['user_id', 'content'];
+
     /**
      * Get the user that owns the Post.
      */

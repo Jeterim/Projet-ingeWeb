@@ -85,6 +85,9 @@ class PostController extends Controller
             if ($bd_user->credits > 10) {
                 $message = 'OK';
                 $bd_user->credits = $bd_user->credits - 10;
+                $post = Post::findOrFail($id);
+                //Notification
+                event(new \App\Events\PotinWasDeleted($post, $user, $message));
                 Post::destroy($id);
                 $bd_user->save();
              } else {

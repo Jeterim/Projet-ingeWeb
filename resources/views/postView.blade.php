@@ -21,7 +21,7 @@
         <div class="media-body">
             <h4 class="media-heading">{{ $comment->user->pseudo }}</h4>
             {{ $comment->content }}
-            <span>{{ Carbon\Carbon::parse($post->created_at)->toDayDateTimeString() }}</span>
+            <span>{{ Carbon\Carbon::parse($post->created_at)->toDayDateTimeString() }}</span><a href="{{ route('post.comment.delete', [$comment->id]) }}">Delete</a>
         </div>
     </div>
     @endforeach

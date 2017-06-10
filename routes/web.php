@@ -69,6 +69,11 @@ Route::post('/post/{post_id}/comment', [
     'as' => 'post.comment'
 ]);
 
+Route::get('/comment/delete/{comment_id}/', [
+    'uses' => 'PostController@deleteComment',
+    'as' => 'post.comment.delete'
+]);
+
 Route::get('/post/delete/{post_id}', [
     'uses' => 'PostController@deleteUserPost',
     'as' => 'post.udelete'

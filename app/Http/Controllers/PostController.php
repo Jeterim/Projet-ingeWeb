@@ -87,6 +87,27 @@ class PostController extends Controller
         
     }
 
+    /**
+     * delete comment
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteComment($id)
+    {
+               //print_r($request->all());
+         //echo $request->input("_token");
+
+        $comment = Comment::where('id', $id)->first();
+        if(!$comment) return redirect()->route('home')->with('message', 'This comment doesn\'t exist');
+        if (Auth::id() != $comment->user_id) {
+            return redirect()->back()->with('message', 'It is not your comment!');
+        }
+        $comment->delete();
+
+        return redirect()->back()->with(['message' => 'Successfully deleted!']);
+        
+    }
+
 
 
     /**

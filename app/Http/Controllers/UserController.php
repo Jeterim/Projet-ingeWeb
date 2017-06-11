@@ -21,29 +21,29 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Get information and all posts about a user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getUserAndPost($id)
+    {
+        $posts = DB::table('potins')
+        ->join('users', 'users.id', '=', 'potins.user_id')
+        ->where('user_id', '=', $id)
+        ->get();
+
+        return view('profile', ['user' => User::findOrFail($id),
+                                'posts' => $posts]);
+    }
 
     /**
      * Get information about a user
      *
      * @return \Illuminate\Http\Response
      */
-    public function getUserProfile($id)
+    public function getEditProfile($id)
     {
         return view('editprofile', ['user' => User::findOrFail($id)]);
-    }
-
-    /**
-     * Get information and all posts about a user
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getUserAndPostProfile($id)
-    {
-        $posts = DB::table('potins')
-        ->join('users', 'users.id', '=', 'potins.user_id')
-        ->get();
-
-        return view('profile', ['user' => User::findOrFail($id),
-                                'posts' => $posts]);
     }
 }

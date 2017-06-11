@@ -33,18 +33,22 @@ Route::get('/search/{user_query}', [
 
 //User
 Route::get('/user/{user_id}', [
-    'uses' => 'UserController@getUserAndPostProfile',
+    'uses' => 'UserController@getUserAndPost',
     'as' => 'profile'
 ]);
 
 
-Route::get('/editprofile/{user_id}', [
-    'uses' => 'UserController@getUserProfile',
+Route::get('/user/edit/{user_id}', [
+    'uses' => 'UserController@getEditProfile',
     'as' => 'profile'
 ]);
-
 
 //Post
+Route::post('/user/edit/{user_id}', [
+    'uses' => 'PostController@editProfile',
+    'as' => 'profile.edit'
+]);
+
 Route::get('/buy/{post_id}',[
     'uses' => 'PostController@buy',
     'as' => 'post.buy'
@@ -89,3 +93,5 @@ Route::get('/post/edit/{post_id}', [
     'uses' => 'PostController@geteditPost',
     'as' => 'post.getedit'
 ]);
+
+Route::post('/editedprofile/{user_id}', 'UserController@editProfile');

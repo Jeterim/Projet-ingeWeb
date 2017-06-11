@@ -5,7 +5,8 @@ jQuery(document).ready(function() {
 	alert(post_id);
         $.post("/vote", {vote: "1", id: post_id},
             function(data) {
-                console.log(data);
+                	console.log(data);
+			$('[data-id="'+data['id']+'"]').find("#accept-number").html(data['vote']);		
             }
 	);
 
@@ -18,6 +19,7 @@ jQuery(document).ready(function() {
         $.post("/vote", {vote: "-1", id: post_id},
             function(data) {
                 console.log(data);
+		$('[data-id="'+data['id']+'"]').find("#decline-number").html(data['vote']);
             }
 	);
     });

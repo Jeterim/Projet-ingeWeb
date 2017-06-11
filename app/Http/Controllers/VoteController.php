@@ -33,7 +33,13 @@ class VoteController extends Controller
     {
        $post_id=$request->id;
        $vote=$request->vote;
-       $msg=$post_id." ".$vote;
-       return response()->json(array('msg'=> $msg), 200);
+
+       $vote_number = 30;
+       if($vote == -1)
+       {
+            $vote_number = 98;
+       }
+
+       return response()->json(array('id'=> $post_id, 'vote' => $vote_number), 200);
     }
 }

@@ -40,7 +40,7 @@ class PostController extends Controller
         $posts = Post::where('content', 'like', '%'.$query.'%')->get();
         //dd(DB::getQueryLog());
         return view('home', ['posts' => $posts]);
-        
+
     }
 
     /**
@@ -55,7 +55,7 @@ class PostController extends Controller
         //dd(DB::getQueryLog());
         //print_r($comments);
         return view('postView', ['post' => Post::findOrFail($id), 'comments' => $comments]);
-        
+
     }
 
     /**
@@ -76,7 +76,7 @@ class PostController extends Controller
         $comment->user_id = Auth::id();
         $comment->potin_id = $id;
         $comment->content = $request->input("message");
-        
+
 
         $message = 'There was an error';
         if ($request->user()->comments()->save($comment)) {
@@ -84,7 +84,7 @@ class PostController extends Controller
         }
 
         return redirect()->back()->with('message', $message);
-        
+
     }
 
     /**
@@ -105,7 +105,7 @@ class PostController extends Controller
         $comment->delete();
 
         return redirect()->back()->with(['message' => 'Successfully deleted!']);
-        
+
     }
 
 
@@ -126,7 +126,7 @@ class PostController extends Controller
 
         $post = new Post();
         $post->content = $request->input("message");
-        
+
 
         $message = 'There was an error';
         if ($request->user()->posts()->save($post)) {
@@ -150,7 +150,7 @@ class PostController extends Controller
             return redirect()->route('home')->with('message', 'It is not your potin!');
         }
         return view('postedit', ['post' => $post]);
-        
+
     }
 
 
@@ -192,7 +192,7 @@ class PostController extends Controller
         }
         $post->delete();
         return redirect()->route('home')->with(['message' => 'Successfully deleted!']);
-        
+
     }
 
     /**
@@ -200,7 +200,7 @@ class PostController extends Controller
     *
     * @return \Illuminate\Http\Response
     **/
-    public function buy($id) 
+    public function buy($id)
     {
         // $post = DB::table('potins')
         // ->where('potins.id', '=', $id)
@@ -230,6 +230,37 @@ class PostController extends Controller
         } else {
             $message = 'problem';
         }
+        return redirect()->route('home')->with('message', $message);
+    }
+
+    /**
+     * Edit a profile
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function editProfile(Request $request, $id)
+    {
+        //print_r($request->all());
+        //echo $request->input("_token");
+         $this->validate($request, [
+            'pseudo' => 'required|max:300',
+            'nom' => 'required|max:300',
+            'prenom' => 'required|max:300',
+            'email' => 'required|max:300'
+        ]);
+
+        $user = User::findOrFail($id);
+        if(!$user) return redirect()->route('home')->with('message', 'This user doesn\'t exist');
+        if (Auth::id() != $user->id) {
+            return redirect()->route('home')->with('message', 'It is not your profile!');
+        }
+        $user->pseudo = $request->input("pseudo");
+        $user->nom = $request->input("nom");
+        $user->prenom = $request->input("prenom");
+        $user->email = $request->input("email");
+        $user->update();
+        $message = 'Profile updated!';
+
         return redirect()->route('home')->with('message', $message);
     }
 

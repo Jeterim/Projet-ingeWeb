@@ -1,49 +1,43 @@
 @extends('layouts.appfullscreen')
 
 @section('content')
-<!--<div class="jumbotron">
+<div class="jumbotron">
         <div class="container">
-          <div class="row">
-            <div class="col">
             <h1>Profile settings</h1>
             <h2>Informations</h2>
-            <form>
+            <form method="POST" action="{{ route('profile.edit', $user->id) }}">
+              {{ csrf_field() }}
               <div class="form-group">
-                <label for="nom">Pseudo</label>
+                <label for="pseudo">Pseudo</label>
                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                 <div class="input-group-addon">@</div>
-                <input type="text" class="form-control" id="inlineFormInputGroup" value="{{ $user->pseudo }}">
+                <input type="text" class="form-control" name="pseudo" value="{{ $user->pseudo }}">
               </div>
               </div>
               <div class="form-group">
-                <label for="nom">Name</label>
-                <input type="text" class="form-control" id="prenom"  value="{{ $user->prenom }}">
+                <label for="prenom">Name</label>
+                <input type="text" class="form-control" name="prenom" value="{{ $user->prenom }}">
               </div>
               <div class="form-group">
                 <label for="nom">Lastname</label>
-                <input type="text" class="form-control" id="nom"  value="{{ $user->nom }}">
+                <input type="text" class="form-control" name="nom"  value="{{ $user->nom }}">
               </div>
               <div class="form-group">
                 <label for="nom">Email address <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></label>
-                <input type="Email" class="form-control" id="email"  value="{{ $user->email }}">
+                <input type="Email" class="form-control" name="email"  value="{{ $user->email }}">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
               </div>
+              <button type="submit" class="btn btn-primary">Save changes</button>
             </form>
 
 
             @if(Auth::user() == $user)
             <p><a class="btn btn-primary btn-lg" href="/editprofile" role="button">Change password</a>
-              <a class="btn btn-primary btn-lg" href="/editprofile" role="button">Save changes</a></p>
+              <a class="btn btn-danger btn-lg" href="/editprofile" role="button">Delete account</a>
+              </p>
             @else
             <p><a class="btn btn-primary btn-lg" href="#" role="button">Follow</a></p>
             @endif
-          </div>
-          <div class="col">
-            <img src="https://static.rentacar.fr/images/cms_uploaded/pages/hub-vehicule/vp/location-voiture-rentacar-citadine.png" width=900px"/>
-          </div>
-          </div>
         </div>
     </div>
--->
-</div>
 @endsection

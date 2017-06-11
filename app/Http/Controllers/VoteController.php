@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use Input;
 use App\User;
 use App\Post;
 use App\Vote;
@@ -30,7 +31,9 @@ class VoteController extends Controller
      */
     public function manager(Request $request)
     {
-       $data = $request->all();
-	    dd($data);
+       $post_id=$request->id;
+       $vote=$request->vote;
+       $msg=$post_id." ".$vote;
+       return response()->json(array('msg'=> $msg), 200);
     }
 }

@@ -8,15 +8,15 @@
         </blockquote>
     </div>
     <div class="panel-footer">
-        <ul aria-label="Post actions">
+        <ul aria-label="Post actions" data-id="{{$post->id}}">
             <li class="Post-action">
-                <a class="action-link accept-btn" href="#">
+                <a id="vote_plus" class="action-link accept-btn" href="#">
                     <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                     <span id="accept-number" aria-hidden="true">42</span>
                 </a>
             </li>
             <li class="Post-action">
-                <a class="action-link decline-btn" href="#">
+                <a id="vote_minus" class="action-link decline-btn" href="#">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     <span id="decline-number" aria-hidden="true">59</span>
                 </a>

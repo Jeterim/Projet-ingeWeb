@@ -1,30 +1,24 @@
 jQuery(document).ready(function() {
-    $('#accept-number').on('click', function(event) {
-        var div = $(this).parent();
+    $('#vote_plus').on('click', function(event) {
+        var post_id = $(this).parent().parent().data('id'); // Comment améliorer ?
         alert("Cliked");
-        $.ajax({
-            url: '/vote',
-            method: 'POST',
-            data: { 'id': 12 },
-            success: function(data) {
+	alert(post_id);
+        $.post("/vote", {vote: "1", id: post_id},
+            function(data) {
                 console.log(data);
-            },
-            error: function(jqXHR, textStatus, errorsThrown) {
-                console.log(JSON.stringify(jqXHR));
-                console.log("Ajax error : " + textStatus + " : " + errorsThrown);
             }
-        });
+	);
 
     });
 
-    $('#decline-number').on('click', function(event) {
-        var div = $(this).parent();
-        $.post("/vote", {
-                like: "-1",
-                id: div.data("id")
-            },
-            function(data, status) {
-                alert("Data: " + data + "\nStatus: " + status);
-            });
+    $('#vote_minus').on('click', function(event) {
+        var post_id = $(this).parent().parent().data('id'); // Comment améliorer ?
+	alert("Cliked");
+	alert(post_id);
+        $.post("/vote", {vote: "-1", id: post_id},
+            function(data) {
+                console.log(data);
+            }
+	);
     });
 });

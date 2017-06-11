@@ -34,12 +34,14 @@ class VoteController extends Controller
        $post_id=$request->id;
        $vote=$request->vote;
 
-       $vote_number = 30;
+       $vote_number_accept = 70;
+       $vote_number_decline = 30;
        if($vote == -1)
        {
-            $vote_number = 98;
+            $vote_number_accept = 32;
+       	    $vote_number_decline = 68;
        }
 
-       return response()->json(array('id'=> $post_id, 'vote' => $vote_number), 200);
+       return response()->json(array('id'=> $post_id, 'vote_accept' => $vote_number_accept, 'vote_decline' => $vote_number_decline), 200);
     }
 }

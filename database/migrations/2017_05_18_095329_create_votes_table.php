@@ -14,10 +14,13 @@ class CreateVotesTable extends Migration
     public function up()
     {
         Schema::create('votes', function (Blueprint $table) {
-            $table->integer('potin_id');
-            $table->integer('user_id');
+	    $table->integer('potin_id')->unsigned();
+	    $table->integer('user_id')->unsigned();
             $table->integer('vote_type');
             $table->timestamps();
+            $table->foreign('potin_id')->references('id')->on('potins');
+            $table->foreign('user_id')->references('id')->on('users');
+	    $table->primary('potin_id','user_id');
         });
     }
 

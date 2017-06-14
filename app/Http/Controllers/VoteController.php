@@ -31,17 +31,36 @@ class VoteController extends Controller
      */
     public function manager(Request $request)
     {
-       $post_id=$request->id;
-       $vote=$request->vote;
+       	$post_id=$request->id;
+       	$vote_type=$request->vote;
+        $user_id = Auth::id();
+	$credits = User::find($user_id);
+	   
+	if($credits->credits - 1 >= 0)
+	{
+   		$credits->credits=$credits->credits - 1;
+		$credits->save();
+		
+		$user_vote = Vote::where('potin_id','=',$post_id)->where('user_id', '=', $user_id)->first();
 
-       $vote_number_accept = 70;
-       $vote_number_decline = 30;
-       if($vote == -1)
-       {
-            $vote_number_accept = 32;
-       	    $vote_number_decline = 68;
-       }
+		if($user_vote)
+   		{
+       			$user_vote->vote_type=$vote_type;
+			$user_vote->save();
+   		}
+   		else
+   		{
+       			$new_vote = new Vote();
+	  		$new_vote->vote_type=$vote_type;
+			$new_vote->user_id=$user_id;
+			Post::findOrFail($post_id)->votes()->save($new_vote);
+			$vote_number_accept=150;
+   		}
+	}
 
-       return response()->json(array('id'=> $post_id, 'vote_accept' => $vote_number_accept, 'vote_decline' => $vote_number_decline), 200);
+	$vote_number_accept=Post::find($post_id)->votes()->where('vote_type','=','1')->count();
+	$vote_number_decline=Post::find($post_id)->votes()->where('vote_type','=','-1')->count();
+
+       	return response()->json(array('user' =>$user_vote,'id'=> $post_id, 'vote_accept' => $vote_number_accept, 'vote_decline' => $vote_number_decline), 200);
     }
 }

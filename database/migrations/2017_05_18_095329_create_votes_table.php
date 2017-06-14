@@ -20,7 +20,7 @@ class CreateVotesTable extends Migration
             $table->timestamps();
             $table->foreign('potin_id')->references('id')->on('potins');
             $table->foreign('user_id')->references('id')->on('users');
-	    $table->primary('potin_id','user_id');
+	    $table->primary(['potin_id','user_id']);
         });
     }
 

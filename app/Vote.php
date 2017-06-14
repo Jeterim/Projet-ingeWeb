@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vote extends Model
 {
-    protected $primaryKey='potin_id';
+    protected $primaryKey=['potin_id','user_id'];
+    public $incrementing=false;
 
     /**
      * Get the user that owns the vote.

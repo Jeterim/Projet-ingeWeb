@@ -89,4 +89,8 @@ Route::get('/post/edit/{post_id}', [
     'as' => 'post.getedit'
 ]);
 
+Route::get('/vote/{post_id}/{vote_type}', [
+    'uses' => 'VoteController@manager'
+]);
+
 Route::post('/vote', 'VoteController@manager');

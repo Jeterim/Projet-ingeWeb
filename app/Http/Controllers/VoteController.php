@@ -29,13 +29,15 @@ class VoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function manager(Request $request)
+    public function manager($post_id, $vote_type)//Request $request)
     {
-       	$post_id=$request->id;
-       	$vote_type=$request->vote;
+       	//$post_id=$request->id;
+       	//$vote_type=$request->vote;
         $user_id = Auth::id();
 	$credits = User::find($user_id);
-	   
+
+	DB::enableQueryLog();
+
 	if($credits->credits - 1 >= 0)
 	{
    		$credits->credits=$credits->credits - 1;
@@ -47,6 +49,7 @@ class VoteController extends Controller
    		{
        			$user_vote->vote_type=$vote_type;
 			$user_vote->save();
+			dd(DB::getQueryLog());
    		}
    		else
    		{
@@ -54,13 +57,12 @@ class VoteController extends Controller
 	  		$new_vote->vote_type=$vote_type;
 			$new_vote->user_id=$user_id;
 			Post::findOrFail($post_id)->votes()->save($new_vote);
-			$vote_number_accept=150;
    		}
 	}
 
 	$vote_number_accept=Post::find($post_id)->votes()->where('vote_type','=','1')->count();
 	$vote_number_decline=Post::find($post_id)->votes()->where('vote_type','=','-1')->count();
 
-       	return response()->json(array('user' =>$user_vote,'id'=> $post_id, 'vote_accept' => $vote_number_accept, 'vote_decline' => $vote_number_decline), 200);
+       	return response()->json(array('id'=> $post_id, 'vote_accept' => $vote_number_accept, 'vote_decline' => $vote_number_decline), 200);
     }
 }

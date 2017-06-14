@@ -1,6 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <img src="{{ $post->picture }}" alt="">
+        <img src="{{ $post->user->picture }}" alt="">
         <h4><a href="/user/{{ $post->user_id }}">@if(!$post->pseudo) {{$post->user->pseudo}} @else {{ $post->pseudo }} @endif</a></h4> <span>{{ Carbon\Carbon::parse($post->updated_at)->toDayDateTimeString() }}</span></div>
     <div class="panel-body">
         <blockquote>

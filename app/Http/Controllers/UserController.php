@@ -28,13 +28,7 @@ class UserController extends Controller
      */
     public function getUserAndPost($id)
     {
-        $posts = DB::table('potins')
-        ->join('users', 'users.id', '=', 'potins.user_id')
-        ->where('user_id', '=', $id)
-        ->get();
-
-        return view('profile', ['user' => User::findOrFail($id),
-                                'posts' => $posts]);
+        return view('profile', ['user' => User::findOrFail($id)]);
     }
 
     /**

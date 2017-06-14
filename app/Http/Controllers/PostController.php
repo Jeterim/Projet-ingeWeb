@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class PostController extends Controller
 {
@@ -262,6 +263,54 @@ class PostController extends Controller
         $message = 'Profile updated!';
 
         return redirect()->route('home')->with('message', $message);
+        
+        /*
+            $imageName = $product->id . '.' . 
+        $request->file('image')->getClientOriginalExtension();
+
+    $request->file('image')->move(
+        base_path() . '/public/images/catalog/', $imageName
+    );
+        */
     }
 
+    /**
+     * Edit a post
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function editPassword(Request $request, $id)
+    {
+        //print_r($request->all());
+        //echo $request->input("_token");
+         $this->validate($request, [
+            'oldpassword' => 'required|string|min:6',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        if(!Hash::check($request['oldpassword'], Auth::User()->password))
+        {
+            return redirect()->route('#')->with('message', 'Your old password is not correct');
+        }
+
+        $user = User::findOrFail($id);
+        $user->password = bcrypt($request->input("password"));
+        $user->update();
+        $message = 'Password updated!';
+
+        return redirect()->route('home')->with('message', $message);
+    }
+
+    /**
+     * Edit a profile
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteProfile(Request $request, $id)
+    {
+      $user = User::findOrFail($id);
+      $user->posts->delete();
+      $user->delete();
+      return redirect()->route('/')->with('message', "profile deleted !");
+    }
 }

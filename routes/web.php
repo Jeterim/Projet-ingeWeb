@@ -43,6 +43,11 @@ Route::get('/user/edit/{user_id}', [
     'as' => 'profile'
 ]);
 
+Route::get('/user/delete/{user_id}', [
+    'uses' => 'PostController@deleteProfile',
+    'as' => 'profile'
+]);
+
 //Post
 Route::post('/user/edit/{user_id}', [
     'uses' => 'PostController@editProfile',
@@ -92,6 +97,11 @@ Route::post('/post/edit/{post_id}', [
 Route::get('/post/edit/{post_id}', [
     'uses' => 'PostController@geteditPost',
     'as' => 'post.getedit'
+]);
+
+Route::post('/user/editprofile/{post_id}', [
+    'uses' => 'PostController@editPassword',
+    'as' => 'profile.editpassword'
 ]);
 
 Route::post('/editedprofile/{user_id}', 'UserController@editProfile');

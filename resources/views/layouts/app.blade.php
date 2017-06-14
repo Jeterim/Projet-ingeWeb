@@ -51,14 +51,6 @@
                             <li><a href="#">April 2013</a></li>
                         </ol>
                     </div>
-                    <div class="sidebar-module">
-                        <h4>Categories</h4>
-                        <ol class="list-unstyled">
-                            <li><a href="#">#info</a></li>
-                            <li><a href="#">#spotted</a></li>
-                            <li><a href="#">#fake</a></li>
-                        </ol>
-                    </div>
                 @show
                 </div>
             </div>

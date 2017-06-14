@@ -59,6 +59,11 @@ Route::post('/createpost', [
     'as' => 'post.create'
 ]);
 
+Route::get('/pages/', [
+    'uses' => 'PostController@getPostPage',
+    'as' => 'post.page'
+]);
+
 Route::get('/post/{post_id}', [
     'uses' => 'PostController@getPostInfo',
     'as' => 'post.view'

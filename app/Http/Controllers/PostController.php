@@ -59,6 +59,19 @@ class PostController extends Controller
     }
 
     /**
+     * get post page
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPostPage()
+    {
+        $posts = Post::orderBy('id', 'DESC')->simplePaginate(10);
+        return view('showPosts', ['posts' => $posts]);
+
+        
+    }
+
+    /**
      * create new comment
      *
      * @return \Illuminate\Http\Response

@@ -48,8 +48,9 @@ class VoteController extends Controller
 		if($user_vote)
    		{
        			$user_vote->vote_type=$vote_type;
-			$user_vote->save();
-			dd(DB::getQueryLog());
+			print_r($user_vote);
+			$user_vote->save();dd(DB::getQueryLog());
+			
    		}
    		else
    		{

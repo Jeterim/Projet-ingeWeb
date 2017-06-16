@@ -29,14 +29,12 @@ class VoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function manager($post_id, $vote_type)//Request $request)
+    public function manager(Request $request)
     {
-       	//$post_id=$request->id;
-       	//$vote_type=$request->vote;
+       	$post_id=$request->id;
+       	$vote_type=$request->vote;
         $user_id = Auth::id();
 	$credits = User::find($user_id);
-
-	DB::enableQueryLog();
 
 	if($credits->credits - 1 >= 0)
 	{
@@ -48,9 +46,7 @@ class VoteController extends Controller
 		if($user_vote)
    		{
        			$user_vote->vote_type=$vote_type;
-			print_r($user_vote);
-			$user_vote->save();dd(DB::getQueryLog());
-			
+			$user_vote->save();
    		}
    		else
    		{

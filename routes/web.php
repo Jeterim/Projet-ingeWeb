@@ -24,9 +24,12 @@ Route::get('/home', [
     'as' => 'home'
 ]);
 
+Route::get('/timeline/{date}', [
+    'uses' => 'PostController@searchDate',
+    'as' => 'timeline'
+]);
 
-
-Route::get('/search/{user_query}', [
+Route::post('/search/', [
     'uses' => 'PostController@searchPost',
     'as' => 'search'
 ]);

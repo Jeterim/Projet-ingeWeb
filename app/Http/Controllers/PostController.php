@@ -32,14 +32,31 @@ class PostController extends Controller
     public function searchPost(Request $query)
     {
         DB::enableQueryLog();
-        //print_r($comments);
+        //print_r($query->all());
         $this->validate($query, [
-            'user_query' => 'required|min:5'
+            'search-text' => 'required|min:3'
         ]);
 
-        $posts = Post::where('content', 'like', '%'.$query.'%')->get();
+
+        $posts = Post::where('content', 'like', '%'.$query->input('search-text').'%')->orderBy('id', 'DESC')->get();
         //dd(DB::getQueryLog());
-        return view('home', ['posts' => $posts]);
+        return view('search', ['query' => $query->input('search-text'), 'posts' => $posts]);
+        
+    }
+
+    /**
+     * get post from search quey
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function searchDate($date)
+    {
+        DB::enableQueryLog();
+        //print_r($query->all());
+
+        $posts = Post::where('created_at', 'like', $date.'%')->orderBy('id', 'DESC')->get();
+        //dd(DB::getQueryLog());
+        return view('search', ['query' => $date, 'posts' => $posts]);
         
     }
 

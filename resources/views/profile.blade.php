@@ -1,10 +1,12 @@
 @extends('layouts.appfullscreen')
-
+    @if(Session::has('message'))
+            <p class="alert alert-info">{{ Session::get('message') }}</p>
+    @endif
 @section('content')
 <div class="jumbotron">
         <div class="container">
           <div class="row">
-            <div class="col">
+            <div class="col col-lg-8">
               <h1>{{ $user->pseudo }}'s profile</h1>
               @if(Auth::user() == $user)
               <h2>{{ $user->prenom }} {{ $user->nom }}</h2>
@@ -16,7 +18,7 @@
               @endif
             </div>
             <div class="col">
-              <img src="{{ $user->picture }}" width="100px"/>
+                <img src="/images/{{ $user->picture }}" width="300px"/>
             </div>
         </div>
     </div>

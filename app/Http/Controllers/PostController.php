@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
+use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
@@ -241,13 +243,12 @@ class PostController extends Controller
      */
     public function editProfile(Request $request, $id)
     {
-        //print_r($request->all());
-        //echo $request->input("_token");
          $this->validate($request, [
             'pseudo' => 'required|max:300',
             'nom' => 'required|max:300',
             'prenom' => 'required|max:300',
-            'email' => 'required|max:300'
+            'email' => 'required|max:300',
+            'picture' => 'image'
         ]);
 
         $user = User::findOrFail($id);
@@ -255,6 +256,19 @@ class PostController extends Controller
         if (Auth::id() != $user->id) {
             return redirect()->route('home')->with('message', 'It is not your profile!');
         }
+
+        if($request->hasFile('picture'))
+        {
+            if (!$request->file('picture')->isValid()) 
+            {
+                return redirect()->route('home')->with('message', 'Invalid file');
+            }
+            $imageName = $user->id . '.' . 
+            $request->file('picture')->getClientOriginalExtension();
+            $request->file('picture')->move(base_path() . '/public/images/', $imageName);
+            $user->picture = $imageName;
+        } 
+
         $user->pseudo = $request->input("pseudo");
         $user->nom = $request->input("nom");
         $user->prenom = $request->input("prenom");
@@ -262,27 +276,16 @@ class PostController extends Controller
         $user->update();
         $message = 'Profile updated!';
 
-        return redirect()->route('home')->with('message', $message);
-        
-        /*
-            $imageName = $product->id . '.' . 
-        $request->file('image')->getClientOriginalExtension();
-
-    $request->file('image')->move(
-        base_path() . '/public/images/catalog/', $imageName
-    );
-        */
+        return back()->with('message', $message);
     }
 
     /**
-     * Edit a post
+     * Edit the password
      *
      * @return \Illuminate\Http\Response
      */
     public function editPassword(Request $request, $id)
     {
-        //print_r($request->all());
-        //echo $request->input("_token");
          $this->validate($request, [
             'oldpassword' => 'required|string|min:6',
             'password' => 'required|string|min:6|confirmed',
@@ -290,7 +293,7 @@ class PostController extends Controller
 
         if(!Hash::check($request['oldpassword'], Auth::User()->password))
         {
-            return redirect()->route('#')->with('message', 'Your old password is not correct');
+            return back()->with('message', 'Your old password is not correct, try again !');
         }
 
         $user = User::findOrFail($id);
@@ -298,19 +301,22 @@ class PostController extends Controller
         $user->update();
         $message = 'Password updated!';
 
-        return redirect()->route('home')->with('message', $message);
+        return back()->with('message', $message);
     }
 
     /**
-     * Edit a profile
+     * Delete a profile
      *
      * @return \Illuminate\Http\Response
      */
     public function deleteProfile(Request $request, $id)
     {
       $user = User::findOrFail($id);
-      $user->posts->delete();
+      foreach($user->posts as $post)
+      {
+          $post->delete();
+      }
       $user->delete();
-      return redirect()->route('/')->with('message', "profile deleted !");
+      return redirect()->route('home')->with('message', "profile deleted !");
     }
 }

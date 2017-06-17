@@ -1,13 +1,16 @@
 @extends('layouts.appfullscreen')
-
+    
 @section('content')
-
+    
 @if(Auth::user() == $user)
 <div class="jumbotron">
         <div class="container">
+            @if(Session::has('message'))
+                <p class="alert alert-info">{{ Session::get('message') }}</p>
+            @endif
             <h1>Profile settings</h1>
             <h2>Informations</h2>
-            <form method="POST" action="{{ route('profile.edit', $user->id) }}">
+            <form method="POST" enctype="multipart/form-data" action="{{ route('profile.edit', $user->id) }}">
               {{ csrf_field() }}
               <div class="form-group">
                 <label for="pseudo">Pseudo</label>
@@ -31,7 +34,7 @@
               </div>
               <div class="form-group">
                 <label class="control-label">Picture profile</label>
-                <input id="input-1" type="file" namem="picture" class="file">
+                <input id="picture" type="file" name="picture" class="file">
               </div>
               <button type="submit" class="btn btn-primary">Save changes</button>
               <a class="btn btn-primary" data-toggle="modal" data-target="#modalPassword" role="button">Change password</a>

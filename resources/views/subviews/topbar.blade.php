@@ -50,8 +50,9 @@
 
                 </ul>
                 @if (Auth::check())
-                <form class="navbar-form navbar-right" method="get" action="search/">
+                <form class="navbar-form navbar-right" method="post" action="{{ route('search')}}">
                     <div class="form-group">
+                        {{ csrf_field() }}
                         <input type="text" class="form-control" name="search-text" pattern=".{3,}" required placeholder="Search">
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>

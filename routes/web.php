@@ -17,16 +17,17 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('/home', [
     'uses' => 'HomeController@index',
     'as' => 'home'
 ]);
 
+Route::get('/timeline/{date}', [
+    'uses' => 'PostController@searchDate',
+    'as' => 'timeline'
+]);
 
-
-Route::get('/search/{user_query}', [
+Route::post('/search/', [
     'uses' => 'PostController@searchPost',
     'as' => 'search'
 ]);
@@ -57,6 +58,11 @@ Route::get('/delete/{post_id}',[
 Route::post('/createpost', [
     'uses' => 'PostController@createPost',
     'as' => 'post.create'
+]);
+
+Route::get('/pages/', [
+    'uses' => 'PostController@getPostPage',
+    'as' => 'post.page'
 ]);
 
 Route::get('/post/{post_id}', [

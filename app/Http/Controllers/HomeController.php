@@ -27,6 +27,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-       return view('home', ['posts' => Post::all()->sortByDesc('id')]);
+        // $posts = DB::table('posts')
+        // ->join('users', 'users.id', '=', 'posts.user_id') // da fuck, ou l'id d'un post est le meme que celui de l'auteur ?
+        // ->limit(5)
+        // ->get();
+        // echo($posts);
+
+       return view('home', ['posts' => Post::all()->sortByDesc('id')->take(10)]);
     }
 }

@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Post;
 use App\Comment;
+use App\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -34,16 +35,27 @@ class PostController extends Controller
      */
     public function searchPost(Request $query)
     {
-        DB::enableQueryLog();
-        //print_r($comments);
         $this->validate($query, [
-            'user_query' => 'required|min:5'
+            'search-text' => 'required|min:3'
         ]);
 
-        $posts = Post::where('content', 'like', '%'.$query.'%')->get();
-        //dd(DB::getQueryLog());
-        return view('home', ['posts' => $posts]);
 
+        $posts = Post::where('content', 'like', '%'.$query->input('search-text').'%')->orderBy('id', 'DESC')->get();
+        return view('search', ['query' => $query->input('search-text'), 'posts' => $posts]);
+        
+    }
+
+    /**
+     * get post from search quey
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function searchDate($date)
+    {
+        $posts = Post::where('created_at', 'like', $date.'%')->orderBy('id', 'DESC')->get();
+
+        return view('search', ['query' => $date, 'posts' => $posts]);
+        
     }
 
     /**
@@ -53,12 +65,23 @@ class PostController extends Controller
      */
     public function getPostInfo($id)
     {
-        //DB::enableQueryLog();
         $comments = Post::find($id)->comments->where('potin_id', $id);
-        //dd(DB::getQueryLog());
-        //print_r($comments);
+
         return view('postView', ['post' => Post::findOrFail($id), 'comments' => $comments]);
 
+    }
+
+    /**
+     * get post page
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getPostPage()
+    {
+        $posts = Post::orderBy('id', 'DESC')->simplePaginate(10);
+        return view('showPosts', ['posts' => $posts]);
+
+        
     }
 
     /**
@@ -68,9 +91,6 @@ class PostController extends Controller
      */
     public function createComment(Request $request, $id)
     {
-               //print_r($request->all());
-         //echo $request->input("_token");
-
          $this->validate($request, [
             'message' => 'required|max:300'
         ]);
@@ -97,9 +117,6 @@ class PostController extends Controller
      */
     public function deleteComment($id)
     {
-               //print_r($request->all());
-         //echo $request->input("_token");
-
         $comment = Comment::where('id', $id)->first();
         if(!$comment) return redirect()->route('home')->with('message', 'This comment doesn\'t exist');
         if (Auth::id() != $comment->user_id) {
@@ -120,9 +137,6 @@ class PostController extends Controller
      */
     public function createPost(Request $request)
     {
-               //print_r($request->all());
-         //echo $request->input("_token");
-
          $this->validate($request, [
             'message' => 'required|max:300'
         ]);
@@ -164,8 +178,6 @@ class PostController extends Controller
      */
     public function editPost(Request $request, $id)
     {
-        //print_r($request->all());
-        //echo $request->input("_token");
          $this->validate($request, [
             'message' => 'required|max:300'
         ]);
@@ -224,6 +236,10 @@ class PostController extends Controller
                 $bd_user->credits = $bd_user->credits - 10;
                 $post = Post::findOrFail($id);
                 //Notification
+                $notif = new Notification();
+                $notif->user_id = $post->user_id;
+                $notif->data = " ".$post->content." has been deleted.";
+                $notif->save();
                 event(new \App\Events\PotinWasDeleted($post, $user, $message));
                 Post::destroy($id);
                 $bd_user->save();

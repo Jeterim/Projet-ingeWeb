@@ -31,8 +31,8 @@
             <li role="presentation" class="active">
                 <a href="#home" aria-controls="home" role="tab" data-toggle="tab">My Posts</a>
             </li>
-            <li role="presentation"><a href="#accepted" aria-controls="profile" role="tab" data-toggle="tab">Accepted posts</a></li>
-            <li role="presentation"><a href="#declined" aria-controls="messages" role="tab" data-toggle="tab">Declined Posts</a></li>
+           <!--<li role="presentation"><a href="#accepted" aria-controls="profile" role="tab" data-toggle="tab">Accepted posts</a></li>
+            <li role="presentation"><a href="#declined" aria-controls="messages" role="tab" data-toggle="tab">Declined Posts</a></li>-->
         </ul>
 
         <!-- Tab panes -->
@@ -43,7 +43,8 @@
                 @endforeach
             </div>
             <div role="tabpanel" class="tab-pane" id="accepted">No accepted posts</div>
-            <div role="tabpanel" class="tab-pane" id="declined">No declined posts</div>
+            <div role="tabpanel" class="tab-pane" id="declined">
+            </div>
         </div>
 
     </div>

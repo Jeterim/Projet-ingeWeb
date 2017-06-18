@@ -1,17 +1,15 @@
 import Echo from "laravel-echo"
 import Pusher from 'pusher-js'
 
-console.log($('meta[name="csrf-token"]').attr('content'));
+// console.log($('meta[name="csrf-token"]').attr('content'));
+// Ensure the server that post request comes from a valid source.
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 
-// $.ajaxSetup({
-//     headers: {
-//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//     }
-// });
-
-
-console.log('something');
-
+// Connect a listeer to pusher service
 window.Echo = new Echo({
     broadcaster: 'pusher',
     key: '50727aae1e64e8f538e6',
@@ -20,13 +18,64 @@ window.Echo = new Echo({
 
 });
 
-console.log('something');
+// Listen to the private channel
 window.Echo.private('potin-deleted.'+userId)
     .listen('.potin-deleted', (e) => {
-        console.log(e.user, e.post, e.message);
-    });
-// @todo: Set up Echo bindings here
+        // console.log(e.user, e.post, e.message);
 
+        $.ajax({
+            type:'GET',
+            url:'/getNotifications',
+            success: function(data) {
+                var dropdown = $('#notification-dropdown');
+                var counter = 0;
+                $('#notification-dropdown').empty();
+                data.forEach( function(notification) { 
+                    dropdown.append('<li><a href="#" id="'+notification.id+'">'+ notification.data +'<span class="deletenotif glyphicon glyphicon-trash" data-id="'+ notification.id +'" aria-hidden="true"></span></a></li>');
+                    counter = counter +1;
+                });
+                document.querySelector("#notification-badge").innerHTML = counter;
+            },
+            error: function(data) {
+                console.log('Error: '+data);
+                console.log(data);
+            }
+	    });
+
+        
+    });
+
+// Add an onclick listener so each trash now deletes the notification
+$('.deletenotif').on('click', function(event) {
+    var notif_id = $(this).data('id');
+    $.ajax({
+        type:'POST',
+        url:'/deleteNotification',
+        data: {id: notif_id},
+            success: function(data) {
+                $('#'+notif_id).remove();
+                minusNotifCounter();
+            },
+            error: function(data) {
+                console.error('Error updating your notifs');
+            }
+	});
+
+});
+
+function minusNotifCounter() {
+    var notification_badge = document.querySelector("#notification-badge");
+    var value  = Number(notification_badge.textContent) -1;
+    document.querySelector("#notification-badge").innerHTML = value;
+}
+function plusNotifCounter() {
+    var notification_badge = document.querySelector("#notification-badge");
+    var value  = Number(notification_badge.textContent) -1;
+    document.querySelector("#notification-badge").innerHTML = value;
+}
+function zeroNotifCounter() {
+    document.querySelector("#notification-badge").innerHTML = 0;
+}
 
 /**
  * First we will load all of this project's JavaScript dependencies which

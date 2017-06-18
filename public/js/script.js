@@ -7,7 +7,8 @@ jQuery(document).ready(function() {
 		data: {vote: "1", id: post_id},
             	success: function(data) {
 			$('[data-id="'+data['id']+'"]').find("#accept-number").html(data['vote_accept']);
-			$('[data-id="'+data['id']+'"]').find("#decline-number").html(data['vote_decline']);	
+			$('[data-id="'+data['id']+'"]').find("#decline-number").html(data['vote_decline']);
+			$('#credits').html(data['credits']);			
             	},
 		error: function(data) {
 			console.log('Error: '+data);
@@ -25,7 +26,8 @@ jQuery(document).ready(function() {
 		data: {vote: "-1", id: post_id},
             	success: function(data) {
 			$('[data-id="'+data['id']+'"]').find("#accept-number").html(data['vote_accept']);
-			$('[data-id="'+data['id']+'"]').find("#decline-number").html(data['vote_decline']);	
+			$('[data-id="'+data['id']+'"]').find("#decline-number").html(data['vote_decline']);
+			$('#credits').html(data['credits']);
             	},
 		error: function(data) {
 			console.log('Error: '+data);

@@ -37,7 +37,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{route('rechargement')}}">
                             <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
                              Credits
                             <span id="credits" class="badge">{{ Auth::user()->credits }}</span>

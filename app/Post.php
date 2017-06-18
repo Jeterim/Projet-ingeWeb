@@ -26,4 +26,12 @@ class Post extends Model
     {
         return $this->hasMany('App\Comment', 'potin_id');
     }
+
+    /**
+     * Get the votes for the blog Post.
+     */
+    public function votes()
+    {
+        return $this->hasMany('App\Vote', 'potin_id');
+    }
 }

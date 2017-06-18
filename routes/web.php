@@ -95,6 +95,7 @@ Route::get('/post/edit/{post_id}', [
     'as' => 'post.getedit'
 ]);
 
+Route::post('/vote', 'VoteController@manager');
 
 //Notifications
 

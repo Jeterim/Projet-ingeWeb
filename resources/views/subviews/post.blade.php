@@ -24,7 +24,7 @@
             <li class="Post-action">
                 <a class="action-link decline-btn" href="/buy/{{$post->id}}">
                     <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-                    <span id="price-number" aria-hidden="true">Acheter pour 42 €</span>
+                    <span id="price-number" aria-hidden="true">Acheter pour 10 Crédits</span>
                 </a>
             </li>
             <li class="Post-action">

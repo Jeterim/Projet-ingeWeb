@@ -84,8 +84,16 @@
                 headers: { 'X-CSRF-Token': "{!! csrf_token() !!}" }
             });
         </script>
+        <script src="{{ mix('js/app.js') }}"></script>
+        @if(Route::is('rechargement'))
+            <script src="{{ asset('js/jquery.card.js') }}"></script>
+            <script>
+                $('#card-form').card({
+                    container: '.card-wrapper',
+                });
+            </script>
+        @endif
     @endif
-    <script src="{{ mix('js/app.js') }}"></script>
 
 </body>
 

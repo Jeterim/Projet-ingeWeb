@@ -44,4 +44,12 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Comment', 'user_id');
     }
+
+    /**
+     * Get the votes for the user.
+     */
+    public function votes()
+    {
+        return $this->hasMany('App\Vote');
+    }
 }

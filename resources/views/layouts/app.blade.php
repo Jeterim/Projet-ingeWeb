@@ -40,11 +40,11 @@
                             Message
                             </div>
                             <div class="col-sm-4">
-                            <h1>{{ Auth::user()->votes()->count() }}</h1>
+                            <h1>{{ Auth::user()->votes()->where('vote_type', '=', '1')->count() }}</h1>
                             Votes <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </div>
                             <div class="col-sm-4">
-                            <h1>{{ Auth::user()->votes()->count() }}</h1>
+                            <h1>{{ Auth::user()->votes()->where('vote_type', '=', '-1')->count() }}</h1>
                             Votes <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                             </div>
                         </div>

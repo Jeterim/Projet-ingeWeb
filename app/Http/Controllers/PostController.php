@@ -39,7 +39,6 @@ class PostController extends Controller
             'search-text' => 'required|min:3'
         ]);
 
-
         $posts = Post::where('content', 'like', '%'.$query->input('search-text').'%')->orderBy('id', 'DESC')->get();
         return view('search', ['query' => $query->input('search-text'), 'posts' => $posts]);
         

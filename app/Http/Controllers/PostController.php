@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Post;
 use App\Comment;
+use App\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -232,6 +233,10 @@ class PostController extends Controller
                 $bd_user->credits = $bd_user->credits - 10;
                 $post = Post::findOrFail($id);
                 //Notification
+                $notif = new Notification();
+                $notif->user_id = $post->user_id;
+                $notif->data = " ".$post->content." has been deleted.";
+                $notif->save();
                 event(new \App\Events\PotinWasDeleted($post, $user, $message));
                 Post::destroy($id);
                 $bd_user->save();

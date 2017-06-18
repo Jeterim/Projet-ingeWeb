@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('prenom');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('picture')->default('none');
+            $table->string('picture')->default('default.png');
             $table->integer('credits')->default('10');
             $table->enum('role', ['admin', 'member'])->default('member');	
 

@@ -88,3 +88,11 @@ Route::get('/post/edit/{post_id}', [
     'uses' => 'PostController@geteditPost',
     'as' => 'post.getedit'
 ]);
+
+
+//Notifications
+
+Route::get('/getNotifications', 'NotificationController@getNotifications');
+
+Route::post('deleteNotification', 'NotificationController@deleteNotification');
+

@@ -6,6 +6,33 @@
     font-weight: lighter;
 }
 
+.dropdown-menu .notif-time,
+.notif-title,
+.notif-content {
+    display: block;
+}
+
+.deletenotif {
+    float: right;
+    margin-top: -25%;
+}
+
+.dropdown-menu .notif-time {
+    font-size: 10px;
+    color: #e42817;
+}
+
+.dropdown-menu .notif-title {
+    font-size: 14px;
+    color: #000;
+}
+
+.dropdown-menu .notif-content {
+    font-size: 12px;
+    color: #4f4f4f;
+    white-space: normal;
+}
+
 .panel-heading,
 .panel-footer {
     background: none;

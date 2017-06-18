@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Post;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -22,12 +22,22 @@ class UserController extends Controller
     }
 
     /**
+     * Get information and all posts about a user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getUserAndPost($id)
+    {
+        return view('profile', ['user' => User::findOrFail($id)]);      
+    }
+
+    /**
      * Get information about a user
      *
      * @return \Illuminate\Http\Response
      */
-    public function getUserProfile($id)
+    public function getEditProfile($id)
     {
-        return view('profile', ['user' => User::findOrFail($id)]);
+        return view('editprofile', ['user' => User::findOrFail($id)]);
     }
 }

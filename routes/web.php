@@ -34,17 +34,27 @@ Route::post('/search/', [
 
 //User
 Route::get('/user/{user_id}', [
-    'uses' => 'UserController@getUserProfile',
+    'uses' => 'UserController@getUserAndPost',
     'as' => 'profile'
 ]);
 
 
-Route::get('editprofile', function () {
-    return view('editprofile', ['pseudo' => 'John Doe']);
-});
+Route::get('/user/edit/{user_id}', [
+    'uses' => 'UserController@getEditProfile',
+    'as' => 'profile'
+]);
 
+Route::get('/user/delete/{user_id}', [
+    'uses' => 'PostController@deleteProfile',
+    'as' => 'profile'
+]);
 
 //Post
+Route::post('/user/edit/{user_id}', [
+    'uses' => 'PostController@editProfile',
+    'as' => 'profile.edit'
+]);
+
 Route::get('/buy/{post_id}',[
     'uses' => 'PostController@buy',
     'as' => 'post.buy'
@@ -95,6 +105,12 @@ Route::get('/post/edit/{post_id}', [
     'as' => 'post.getedit'
 ]);
 
+Route::post('/user/editprofile/{post_id}', [
+    'uses' => 'PostController@editPassword',
+    'as' => 'profile.editpassword'
+]);
+
+Route::post('/editedprofile/{user_id}', 'UserController@editProfile');
 Route::post('/vote', 'VoteController@manager');
 
 //Notifications

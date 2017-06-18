@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
+use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
@@ -35,7 +38,6 @@ class PostController extends Controller
         $this->validate($query, [
             'search-text' => 'required|min:3'
         ]);
-
 
         $posts = Post::where('content', 'like', '%'.$query->input('search-text').'%')->orderBy('id', 'DESC')->get();
         return view('search', ['query' => $query->input('search-text'), 'posts' => $posts]);
@@ -65,7 +67,7 @@ class PostController extends Controller
         $comments = Post::find($id)->comments->where('potin_id', $id);
 
         return view('postView', ['post' => Post::findOrFail($id), 'comments' => $comments]);
-        
+
     }
 
     /**
@@ -96,7 +98,7 @@ class PostController extends Controller
         $comment->user_id = Auth::id();
         $comment->potin_id = $id;
         $comment->content = $request->input("message");
-        
+
 
         $message = 'There was an error';
         if ($request->user()->comments()->save($comment)) {
@@ -104,7 +106,7 @@ class PostController extends Controller
         }
 
         return redirect()->back()->with('message', $message);
-        
+
     }
 
     /**
@@ -122,7 +124,7 @@ class PostController extends Controller
         $comment->delete();
 
         return redirect()->back()->with(['message' => 'Successfully deleted!']);
-        
+
     }
 
 
@@ -140,7 +142,7 @@ class PostController extends Controller
 
         $post = new Post();
         $post->content = $request->input("message");
-        
+
 
         $message = 'There was an error';
         if ($request->user()->posts()->save($post)) {
@@ -164,7 +166,7 @@ class PostController extends Controller
             return redirect()->route('home')->with('message', 'It is not your potin!');
         }
         return view('postedit', ['post' => $post]);
-        
+
     }
 
 
@@ -204,7 +206,7 @@ class PostController extends Controller
         }
         $post->delete();
         return redirect()->route('home')->with(['message' => 'Successfully deleted!']);
-        
+
     }
 
     /**
@@ -212,7 +214,7 @@ class PostController extends Controller
     *
     * @return \Illuminate\Http\Response
     **/
-    public function buy($id) 
+    public function buy($id)
     {
         // $post = DB::table('potins')
         // ->where('potins.id', '=', $id)
@@ -249,4 +251,87 @@ class PostController extends Controller
         return redirect()->route('home')->with('message', $message);
     }
 
+    /**
+     * Edit a profile
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function editProfile(Request $request, $id)
+    {
+         $this->validate($request, [
+            'pseudo' => 'required|max:300',
+            'nom' => 'required|max:300',
+            'prenom' => 'required|max:300',
+            'email' => 'required|max:300',
+            'picture' => 'image'
+        ]);
+
+        $user = User::findOrFail($id);
+        if(!$user) return redirect()->route('home')->with('message', 'This user doesn\'t exist');
+        if (Auth::id() != $user->id) {
+            return redirect()->route('home')->with('message', 'It is not your profile!');
+        }
+
+        if($request->hasFile('picture'))
+        {
+            if (!$request->file('picture')->isValid()) 
+            {
+                return redirect()->route('home')->with('message', 'Invalid file');
+            }
+            $imageName = $user->id . '.' . 
+            $request->file('picture')->getClientOriginalExtension();
+            $request->file('picture')->move(base_path() . '/public/images/', $imageName);
+            $user->picture = $imageName;
+        } 
+
+        $user->pseudo = $request->input("pseudo");
+        $user->nom = $request->input("nom");
+        $user->prenom = $request->input("prenom");
+        $user->email = $request->input("email");
+        $user->update();
+        $message = 'Profile updated!';
+
+        return back()->with('message', $message);
+    }
+
+    /**
+     * Edit the password
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function editPassword(Request $request, $id)
+    {
+         $this->validate($request, [
+            'oldpassword' => 'required|string|min:6',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        if(!Hash::check($request['oldpassword'], Auth::User()->password))
+        {
+            return back()->with('message', 'Your old password is not correct, try again !');
+        }
+
+        $user = User::findOrFail($id);
+        $user->password = bcrypt($request->input("password"));
+        $user->update();
+        $message = 'Password updated!';
+
+        return back()->with('message', $message);
+    }
+
+    /**
+     * Delete a profile
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteProfile(Request $request, $id)
+    {
+      $user = User::findOrFail($id);
+      foreach($user->posts as $post)
+      {
+          $post->delete();
+      }
+      $user->delete();
+      return redirect()->route('home')->with('message', "profile deleted !");
+    }
 }

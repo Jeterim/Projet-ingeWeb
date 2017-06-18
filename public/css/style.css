@@ -1,5 +1,5 @@
 .navbar {
-    margin-bottom: 0;
+    margin-bottom: 10px;
 }
 
 .navbar-brand span {
@@ -89,21 +89,24 @@
 
 .other-btn:active,
 .other-btn:focus,
-.other-btn:hover {
+.other-btn:hover,
+.other-btn.active {
     color: #1DA1F2;
     text-decoration: none;
 }
 
 .accept-btn:active,
 .accept-btn:focus,
-.accept-btn:hover {
+.accept-btn:hover,
+.accept-btn.active {
     color: #19CF86;
     text-decoration: none;
 }
 
 .decline-btn:active,
 .decline-btn:focus,
-.decline-btn:hover {
+.decline-btn:hover,
+.decline-btn.active {
     color: #E81C4F;
     text-decoration: none;
 }

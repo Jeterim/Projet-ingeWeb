@@ -13,8 +13,6 @@
               <p><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> {{ $user->email }}</p>
               <p><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> {{ $user->credits }} crédits disponibles</p>
               <p><a class="btn btn-primary btn-lg" href="/user/edit/{{ $user->id }}" role="button">Edit my profile</a></p>
-              @else
-              <p><a class="btn btn-primary btn-lg" href="#" role="button">Follow</a></p>
               @endif
             </div>
             <div class="col">

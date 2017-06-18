@@ -27,7 +27,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/user/{{ Auth::id() }}">Your profile</a></li>
-                            <li><a href="#">Profile settings</a></li>
+                            <li><a href="/user/edit/{{ Auth::id() }}">Profile settings</a></li>
                             <li><a href="#">Statistics</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{{ route('logout') }}"

@@ -31,8 +31,22 @@
             <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
                 @section('sidebar')
                     <div class="sidebar-module sidebar-module-inset">
-                        <h4>About</h4>
-                        <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+                        <h4>About me</h4>
+                        <h3>{{ Auth::user()->pseudo }}</h3>
+                        <div class="row text-center">
+                            <div class="col-sm-4">
+                            <h1>{{ Auth::user()->posts()->count() }}</h1>
+                            Message
+                            </div>
+                            <div class="col-sm-4">
+                            <h1>{{ Auth::user()->votes()->count() }}</h1>
+                            Votes <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-sm-4">
+                            <h1>{{ Auth::user()->votes()->count() }}</h1>
+                            Votes <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            </div>
+                        </div>
                     </div>
                     <div class="sidebar-module">
                         <h4>Archives</h4>

@@ -22,7 +22,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::check())
                     <li><a href="#"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span> Notifications <span class="badge">42</span></a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span> Credits <span class="badge">{{ Auth::user()->credits }}</span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span> Credits <span id="credits" class="badge">{{ Auth::user()->credits }}</span></a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings<span class="caret"></span></a>
                         <ul class="dropdown-menu">

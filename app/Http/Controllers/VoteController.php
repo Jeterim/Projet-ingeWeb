@@ -35,18 +35,23 @@ class VoteController extends Controller
        	$vote_type=$request->vote;
         $user_id = Auth::id();
 	$credits = User::find($user_id);
+	$to_pay = 1;
 
 	if($credits->credits - 1 >= 0)
 	{
-   		$credits->credits=$credits->credits - 1;
-		$credits->save();
-		
-		$user_vote = Vote::where('potin_id','=',$post_id)->where('user_id', '=', $user_id)->first();
+   		$user_vote = Vote::where('potin_id','=',$post_id)->where('user_id', '=', $user_id)->first();
 
 		if($user_vote)
    		{
-       			$user_vote->vote_type=$vote_type;
-			$user_vote->save();
+			if($vote_type == $user_vote->vote_type)
+			{
+				$to_pay = 0;
+			}
+			else
+			{
+				$user_vote->vote_type=$vote_type;
+				$user_vote->save();
+			}
    		}
    		else
    		{
@@ -55,11 +60,16 @@ class VoteController extends Controller
 			$new_vote->user_id=$user_id;
 			Post::findOrFail($post_id)->votes()->save($new_vote);
    		}
+		if($to_pay)
+		{
+			$credits->credits=$credits->credits - 1;
+			$credits->save();
+		}
 	}
 
 	$vote_number_accept=Post::find($post_id)->votes()->where('vote_type','=','1')->count();
 	$vote_number_decline=Post::find($post_id)->votes()->where('vote_type','=','-1')->count();
 
-       	return response()->json(array('id'=> $post_id, 'vote_accept' => $vote_number_accept, 'vote_decline' => $vote_number_decline), 200);
+       	return response()->json(array('id'=> $post_id, 'vote_accept' => $vote_number_accept, 'vote_decline' => $vote_number_decline, 'credits'=>$credits->credits), 200);
     }
 }

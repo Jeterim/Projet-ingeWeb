@@ -50,6 +50,14 @@ class User extends Authenticatable
      */
     public function votes()
     {
-        return $this->hasMany('App\Vote');
+        return $this->hasMany('App\Vote', 'user_id');
+    }
+  
+    /**
+     * Get the notifications for the user.
+     */
+    public function notifications()
+    {
+        return $this->hasMany('App\Notification', 'user_id');
     }
 }

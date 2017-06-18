@@ -26,4 +26,38 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public $timestamps = false;
+
+    /**
+     * Get the posts for the user.
+     */
+    public function posts()
+    {
+        return $this->hasMany('App\Post');
+    }
+
+    /**
+     * Get the votes for the user.
+     */
+    public function votes()
+    {
+        return $this->hasMany('App\Vote', 'user_id');
+    }
+
+    /**
+     * Get the posts for the user.
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Comment', 'user_id');
+    }
+  
+    /**
+     * Get the notifications for the user.
+     */
+    public function notifications()
+    {
+        return $this->hasMany('App\Notification', 'user_id');
+    }
 }

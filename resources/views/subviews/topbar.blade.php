@@ -16,19 +16,45 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="{{ url('/home') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home <span class="sr-only">(current)</span></a></li>
                     @if (Auth::check())
-                    <li><a href="{{ url('/profile') }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> John Doe</a></li>
+                    <li><a href="/user/{{ Auth::id() }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ Auth::user()->pseudo}}</a></li>
                     @endif
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::check())
-                    <li><a href="#"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span> Notifications <span class="badge">42</span></a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span> Credits <span class="badge">12</span></a></li>
+                    <li class="dropdown" >
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-bell" aria-hidden="true"></span> 
+                            Notifications 
+                            <span id="notification-badge" class="badge">{{ Auth::user()->notifications()->count() }}</span>
+                            @if ( Auth::user()->notifications()->count() > 0 )
+                                <span class="caret"></span>
+                                <ul id="notification-dropdown" class="dropdown-menu">
+                                @foreach (Auth::user()->notifications as $notification)
+                                @include('subviews.notification', ['notification' => $notification])
+                                @endforeach    
+                            </ul>
+                            @endif
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('rechargement')}}">
+                            <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+                             Credits
+                            <span id="credits" class="badge">{{ Auth::user()->credits }}</span>
+                        </a>
+                    </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            Settings
+                            <span class="caret"></span>
+                        </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ url('/profile') }}">Your profile</a></li>
-                            <li><a href="#">Profile settings</a></li>
-                            <li><a href="#">Statistics</a></li>
+                            <li><a href="/user/{{ Auth::id() }}">Your profile</a></li>
+                            
+                            <li><a href="/user/edit/{{ Auth::id() }}">Profile settings</a></li>
+                            <li><a href="{{route('rechargement')}}">Acheter des crédits</a></li>
+                            
                             <li role="separator" class="divider"></li>
                             <li><a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
@@ -50,9 +76,10 @@
 
                 </ul>
                 @if (Auth::check())
-                <form class="navbar-form navbar-right">
+                <form class="navbar-form navbar-right" method="post" action="{{ route('search')}}">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        {{ csrf_field() }}
+                        <input type="text" class="form-control" name="search-text" pattern=".{3,}" required placeholder="Search">
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
@@ -66,6 +93,8 @@
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
+        <form method="POST" action="{{ route('post.create') }}">
+            {{ csrf_field() }}
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -74,14 +103,15 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="message-text" class="control-label">Your post:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+                        <textarea class="form-control" id="message-text" name="message"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger">Post it</button>
+                    <button type="submit" class="btn btn-danger">Post it</button>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 @endif

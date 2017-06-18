@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Post;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -25,10 +27,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = DB::table('potins')
-        ->join('users', 'users.id', '=', 'potins.user_id')
-        ->limit(5)
-        ->get();
-        return view('home', ['posts' => $posts]);
+       return view('home', ['posts' => Post::all()->sortByDesc('id')->take(10)]);
     }
 }

@@ -38,7 +38,7 @@
               </div>
               <button type="submit" class="btn btn-primary">Save changes</button>
               <a class="btn btn-primary" data-toggle="modal" data-target="#modalPassword" role="button">Change password</a>
-              <a class="btn btn-danger" href="/user/delete/{{ $user->id }}" onclick="confirm('Do you really want to delete your acount?');" id="deleteaccount" role="button">Delete account</a>
+              <a class="btn btn-danger" href="/user/delete/{{ $user->id }}" onclick="return confirm('Do you really want to delete your acount?');" id="deleteaccount" role="button">Delete account</a>
 
             </form>
             @else

@@ -21,10 +21,34 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::check())
-                    <li><a href="#"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span> Notifications <span class="badge">42</span></a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span> Credits <span id="credits" class="badge">{{ Auth::user()->credits }}</span></a></li>
+                    <li class="dropdown" >
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-bell" aria-hidden="true"></span> 
+                            Notifications 
+                            <span id="notification-badge" class="badge">{{ Auth::user()->notifications()->count() }}</span>
+                            @if ( Auth::user()->notifications()->count() > 0 )
+                                <span class="caret"></span>
+                                <ul id="notification-dropdown" class="dropdown-menu">
+                                @foreach (Auth::user()->notifications as $notification)
+                                @include('subviews.notification', ['notification' => $notification])
+                                @endforeach    
+                            </ul>
+                            @endif
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+                             Credits
+                            <span class="badge">{{ Auth::user()->credits }}</span>
+                        </a>
+                    </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            Settings
+                            <span class="caret"></span>
+                        </a>
                         <ul class="dropdown-menu">
                             <li><a href="/user/{{ Auth::id() }}">Your profile</a></li>
                             <li><a href="#">Profile settings</a></li>

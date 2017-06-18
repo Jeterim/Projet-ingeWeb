@@ -31,6 +31,7 @@
             <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
                 @section('sidebar')
                     <div class="sidebar-module sidebar-module-inset">
+                    @if(Auth::check())
                         <h4>About me</h4>
                         <h3>{{ Auth::user()->pseudo }}</h3>
                         <div class="row text-center">
@@ -47,6 +48,7 @@
                             Votes <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                             </div>
                         </div>
+                    @endif
                     </div>
                     <div class="sidebar-module">
                         <h4>Archives</h4>

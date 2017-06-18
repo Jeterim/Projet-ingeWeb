@@ -52,7 +52,7 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Comment', 'user_id');
     }
-
+  
     /**
      * Get the notifications for the user.
      */

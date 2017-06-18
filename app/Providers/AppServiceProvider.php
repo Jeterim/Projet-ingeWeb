@@ -16,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Post::deleting( function($post){
             $post->votes()->delete();
+            $post->comments()->delete();
         });
     }
 

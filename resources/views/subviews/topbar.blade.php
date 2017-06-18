@@ -53,6 +53,7 @@
                             <li><a href="/user/{{ Auth::id() }}">Your profile</a></li>
                             <li><a href="#">Profile settings</a></li>
                             <li><a href="#">Statistics</a></li>
+                            <li><a href="{{route('rechargement')}}">Acheter des crédits</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();

@@ -98,8 +98,13 @@ Route::get('/post/edit/{post_id}', [
 Route::post('/vote', 'VoteController@manager');
 
 //Notifications
-
 Route::get('/getNotifications', 'NotificationController@getNotifications');
-
 Route::post('deleteNotification', 'NotificationController@deleteNotification');
 
+// Rechargement
+Route::get('/recharge', [
+    'uses' => 'PaymentController@recharge',
+    'as' => 'rechargement'
+]);
+
+Route::post('/moreCredits', 'PaymentController@addCredits');

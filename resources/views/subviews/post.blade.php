@@ -8,17 +8,17 @@
         </blockquote>
     </div>
     <div class="panel-footer">
-        <ul aria-label="Post actions">
+        <ul aria-label="Post actions" data-id="{{$post->id}}">
             <li class="Post-action">
-                <a class="action-link accept-btn" href="#">
+                <a class="vote_plus action-link accept-btn {{ Auth::user()->votes()->where('potin_id', '=', $post->id)->where('vote_type','=','1')->first()?'active':'' }}" href="#">
                     <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                    <span id="accept-number" aria-hidden="true">42</span>
+                    <span id="accept-number" aria-hidden="true">{{App\Post::find($post->id)->votes()->where('vote_type','=','1')->count()}}</span>
                 </a>
             </li>
             <li class="Post-action">
-                <a class="action-link decline-btn" href="#">
+                <a class="vote_minus action-link decline-btn {{ Auth::user()->votes()->where('potin_id', '=', $post->id)->where('vote_type','=','-1')->first()?'active':'' }}" href="#">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    <span id="decline-number" aria-hidden="true">59</span>
+                    <span id="decline-number" aria-hidden="true">{{App\Post::find($post->id)->votes()->where('vote_type','=','-1')->count()}}</span>
                 </a>
             </li>
             <li class="Post-action">

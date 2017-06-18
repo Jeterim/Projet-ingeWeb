@@ -38,19 +38,19 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the posts for the user.
-     */
-    public function comments()
-    {
-        return $this->hasMany('App\Comment', 'user_id');
-    }
-
-    /**
      * Get the votes for the user.
      */
     public function votes()
     {
         return $this->hasMany('App\Vote', 'user_id');
+    }
+
+    /**
+     * Get the posts for the user.
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Comment', 'user_id');
     }
   
     /**

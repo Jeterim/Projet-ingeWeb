@@ -40,7 +40,7 @@
                         <a href="#">
                             <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
                              Credits
-                            <span class="badge">{{ Auth::user()->credits }}</span>
+                            <span id="credits" class="badge">{{ Auth::user()->credits }}</span>
                         </a>
                     </li>
                     <li class="dropdown">

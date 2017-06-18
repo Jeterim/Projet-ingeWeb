@@ -27,6 +27,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-       return view('home', ['posts' => Post::all()->sortByDesc('id')]);
+       return view('home', ['posts' => Post::all()->sortByDesc('id')->take(10)]);
     }
 }

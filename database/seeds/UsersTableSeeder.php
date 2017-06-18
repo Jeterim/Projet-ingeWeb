@@ -23,6 +23,7 @@ class UsersTableSeeder extends Seeder
             'nom' => 'Petit',
             'prenom' => 'Jeremy',
             'email' => 'jeremy.petit@insa-cvl.fr',
+            'credits' => 5000,
             'password' => bcrypt('secret'),
         ]);
         DB::table('users')->insert([
@@ -30,6 +31,7 @@ class UsersTableSeeder extends Seeder
             'nom' => 'Laplanche',
             'prenom' => 'Quentin',
             'email' => 'quentin.laplanche@insa-cvl.fr',
+            'credits' => 5000,
             'password' => bcrypt('secret'),
         ]);
         DB::table('users')->insert([

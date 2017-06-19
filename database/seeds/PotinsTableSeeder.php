@@ -48,5 +48,47 @@ class PotinsTableSeeder extends Seeder
             'created_at' => '2017-06-12 16:38:56',
             'updated_at' => '2017-06-12 16:38:56'
         ]);
+
+        DB::table('potins')->insert([
+            'user_id' => 5,
+            'content' => 'Amine a bu pendant le ramadan en pleine journée',
+            'created_at' => '2017-06-13 16:38:56',
+            'updated_at' => '2017-06-13 16:38:56'
+        ]);
+
+        DB::table('potins')->insert([
+            'user_id' => 4,
+            'content' => 'Négociation du diplome d\'ingénieur en cours pour certains élèves',
+            'created_at' => '2017-06-14 16:38:56',
+            'updated_at' => '2017-06-14 16:38:56'
+        ]);
+
+        DB::table('potins')->insert([
+            'user_id' => 5,
+            'content' => 'Vincent était présent aujoud\'hui au cours',
+            'created_at' => '2017-06-15 16:38:56',
+            'updated_at' => '2017-06-15 16:38:56'
+        ]);
+
+        DB::table('potins')->insert([
+            'user_id' => 4,
+            'content' => 'Négociation du diplome d\'ingénieur en cours pour certains élèves',
+            'created_at' => '2017-06-14 16:38:56',
+            'updated_at' => '2017-06-14 16:38:56'
+        ]);
+
+        DB::table('potins')->insert([
+            'user_id' => 3,
+            'content' => 'Lucas va se mettre au sport',
+            'created_at' => '2017-06-14 16:38:56',
+            'updated_at' => '2017-06-14 16:38:56'
+        ]);
+
+        DB::table('potins')->insert([
+            'user_id' => 3,
+            'content' => 'Le partiel de sécurité était super dur !',
+            'created_at' => '2017-06-15 16:38:56',
+            'updated_at' => '2017-06-15 16:38:56'
+        ]);
     }
 }
